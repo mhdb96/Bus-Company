@@ -13,29 +13,54 @@ namespace TASTester
     {
         static void Main(string[] args)
         {
-            CLinkedList<BusModel> buses = BusModel.GetSampleData();
-            CNode<BusModel> bus = buses.header;
-            while(bus != null)
-            {
-                Console.WriteLine(bus.Data.Plate);
-                bus = bus.Next;
-            }
+            LinkedList<string> t = new LinkedList<string>();            
+            CLinkedList<BusModel> Data = new CLinkedList<BusModel>();
 
-            CLinkedList<DestinationModel> dests = DestinationModel.GetSampleData();
-            CNode<DestinationModel> dest = dests.header;
-            while (dest != null)
+            //Data.AddFirst(new BusModel("ASD1111", 50));
+            //Data.AddFirst(new BusModel("ASD2222", 25));
+            //Data.AddFirst(new BusModel("ASD3333", 30));
+            //Data.AddFirst(new BusModel("ASD4444", 70));
+            //Data.AddFirst(new BusModel("ASD5555", 80));
+            BusModel b = new BusModel("ASD1111", 50);
+            BusModel u = new BusModel("ASD1111", 50);
+            //Data.AddLast(b);
+            Data.AddLast(new BusModel("ASD2222", 25));
+            Data.AddLast(new BusModel("ASD3333", 30));
+            Data.AddLast(b);
+            //Data.RemoveLast();
+            Data.AddLast(new BusModel("ASD4444", 70));
+            Data.AddLast(new BusModel("ASD5555", 80));
+            Console.WriteLine(Data.Remove(u)); ;
+            //Data.RemoveFirst();
+            //Data.AddFirst(new BusModel("ASD0000", 80));
+            //Console.WriteLine(Data.Last.Plate);
+            //Data.RemoveAt(4);
+            for (int i = 0; i < Data.Count; i++)
             {
-                Console.WriteLine(dest.Data.Name);
-                dest = dest.Next;
+                Console.WriteLine(Data[i].Plate);
             }
+            //Console.WriteLine(Data[1].Plate); 
+            //CLinkedList<BusModel> buses = BusModel.GetSampleData();            
+            //foreach (BusModel model in Data)
+            //{
+            //    Console.WriteLine(model.Plate);
+            //}
+            //Console.WriteLine(Data.Last.Plate);
+            //CLinkedList<DestinationModel> dests = DestinationModel.GetSampleData();
+            //CNode<DestinationModel> dest = dests.First;
+            //while (dest != null)
+            //{
+            //    Console.WriteLine(dest.Data.Name);
+            //    dest = dest.Next;
+            //}
 
-            CLinkedList<DriverModel> drivers = DriverModel.GetSampleData();
-            CNode<DriverModel> driver = drivers.header;
-            while (driver != null)
-            {
-                Console.WriteLine(driver.Data.Name);
-                driver = driver.Next;
-            }
+            //CLinkedList<DriverModel> drivers = DriverModel.GetSampleData();
+            //CNode<DriverModel> driver = drivers.First;
+            //while (driver != null)
+            //{
+            //    Console.WriteLine(driver.Data.Name);
+            //    driver = driver.Next;
+            //}
 
             Console.ReadLine();
         }

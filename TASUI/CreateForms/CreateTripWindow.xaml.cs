@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
+using TASLibrary.Enums;
 
 namespace TASUI.CreateForms
 {

@@ -26,11 +26,11 @@ namespace TASLibrary.Models
         public static CLinkedList<BusModel> GetSampleData()
         {
             CLinkedList<BusModel> Data = new CLinkedList<BusModel>();
-            Data.Add(new BusModel("ASD1111", 50));
-            Data.Add(new BusModel("ASD2222", 25));
-            Data.Add(new BusModel("ASD3333", 30));
-            Data.Add(new BusModel("ASD4444", 70));
-            Data.Add(new BusModel("ASD5555", 80));
+            Data.AddLast(new BusModel("ASD1111", 50));
+            Data.AddLast(new BusModel("ASD2222", 25));
+            Data.AddLast(new BusModel("ASD3333", 30));
+            Data.AddLast(new BusModel("ASD4444", 70));
+            Data.AddLast(new BusModel("ASD5555", 80));
             return Data;
         }
     }

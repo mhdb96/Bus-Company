@@ -24,10 +24,10 @@ namespace TASLibrary.Models
         public static CLinkedList<DriverModel> GetSampleData()
         {
             CLinkedList<DriverModel> Data = new CLinkedList<DriverModel>();
-            Data.Add(new DriverModel("Remzi Aslan"));
-            Data.Add(new DriverModel("Can Hekimoglu"));
-            Data.Add(new DriverModel("Ufuk Kantar"));
-            Data.Add(new DriverModel("Furkan Korkmaz"));            
+            Data.AddLast(new DriverModel("Remzi Aslan"));
+            Data.AddLast(new DriverModel("Can Hekimoglu"));
+            Data.AddLast(new DriverModel("Ufuk Kantar"));
+            Data.AddLast(new DriverModel("Furkan Korkmaz"));            
             return Data;
         }
     }

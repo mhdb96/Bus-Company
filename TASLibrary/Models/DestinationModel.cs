@@ -24,9 +24,9 @@ namespace TASLibrary.Models
         public static CLinkedList<DestinationModel> GetSampleData()
         {
             CLinkedList<DestinationModel> Data = new CLinkedList<DestinationModel>();
-            Data.Add(new DestinationModel("Kocaeli - Ankara"));
-            Data.Add(new DestinationModel("Kocaeli - Izmir"));
-            Data.Add(new DestinationModel("Kocaeli - Istanbul"));                        
+            Data.AddLast(new DestinationModel("Kocaeli - Ankara"));
+            Data.AddLast(new DestinationModel("Kocaeli - Izmir"));
+            Data.AddLast(new DestinationModel("Kocaeli - Istanbul"));                        
             return Data;
         }
     }
