@@ -43,8 +43,12 @@
   <ItemGroup>
     <Compile Include="CustomDataStructures\CLinkedList.cs" />
     <Compile Include="CustomDataStructures\CNode.cs" />
+    <Compile Include="DataAccess\IDataConnection.cs" />
+    <Compile Include="DataAccess\PseudoConnector.cs" />
+    <Compile Include="DataAccess\TextFileConnector.cs" />
     <Compile Include="Enums\SeatStatus.cs" />
     <Compile Include="Enums\SexType.cs" />
+    <Compile Include="GlobalConfig.cs" />
     <Compile Include="Models\BusModel.cs" />
     <Compile Include="Models\DestinationModel.cs" />
     <Compile Include="Models\DriverModel.cs" />
@@ -53,8 +57,6 @@
     <Compile Include="Models\TripModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccess\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
