@@ -71,6 +71,7 @@
       <DependentUpon>CreateTripWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Requesters\IAdminPanelRequester.cs" />
+    <Compile Include="Requesters\ICreateTripRequester.cs" />
     <Compile Include="Requesters\IUserPanelRequester.cs" />
   </ItemGroup>
   <ItemGroup>

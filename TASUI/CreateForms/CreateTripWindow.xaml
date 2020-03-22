@@ -13,128 +13,76 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="CreateTripWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions >
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>        
-        <TextBlock
-            Grid.Row="2" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Trip Number:
-        </TextBlock>
-        <TextBox
-            x:Name="noText"
-            Grid.Row="2" Grid.Column="3"
-            materialDesign:HintAssist.Hint="Enter Trip No."
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            VerticalAlignment="Center" />
-        <TextBlock
-            Grid.Row="3" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Destination:
-        </TextBlock>
-        <ComboBox     
-            x:Name="destinationsCombobox"
-            Grid.Row="3" Grid.Column="3"
-            Width="200"
-            materialDesign:HintAssist.Hint="Select A Destination"
-            materialDesign:TextFieldAssist.HasClearButton="True"            
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <TextBlock
-            Grid.Row="4" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Bus:
-        </TextBlock>
-        <ComboBox
-            x:Name="busesCombobox"
-            Grid.Row="4" Grid.Column="3"
-            HorizontalAlignment="Center"
-            Width="200"
-            materialDesign:HintAssist.Hint="Select A Bus"
-            materialDesign:TextFieldAssist.HasClearButton="True"            
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Plate}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <TextBlock
-            Grid.Row="5" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Driver:
-        </TextBlock>
-        <ComboBox 
-            x:Name="driversCombobox"
-            Grid.Row="5" Grid.Column="3"
-            HorizontalAlignment="Center"
-            Width="200"
-            materialDesign:HintAssist.Hint="Select A Driver"
-            materialDesign:TextFieldAssist.HasClearButton="True"            
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <TextBlock
-            Grid.Row="6" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Date:
-        </TextBlock>
-        <DatePicker
-            x:Name="tripDate"
-            Grid.Row="6" Grid.Column="3"
-            Width="200"
-            materialDesign:HintAssist.Hint="Pick Date"
-            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-        <TextBlock
-            Grid.Row="7" Grid.Column="2"
-            VerticalAlignment="Bottom"
-            Margin="0 10 30 4"
-            Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-            Time:
-        </TextBlock>
-        <materialDesign:TimePicker
-            x:Name="tripTime"
-            Grid.Row="7" Grid.Column="3"
-            Is24Hours="True"            
-            Width="200"/>
-    </Grid>
+        Title="Create New Trip" Height="480" Width="320">
+    <Border Padding="10 35">
+        <StackPanel>
+
+            <TextBox
+                materialDesign:HintAssist.Hint="Trip Code"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                VerticalAlignment="Center"
+                Margin="0 0 0 10"  />
+
+            <ComboBox    
+                x:Name="destinationsCombobox"
+                materialDesign:HintAssist.Hint="Select A Destination"
+                materialDesign:TextFieldAssist.HasClearButton="True"            
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Margin="0 0 0 10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <ComboBox
+                x:Name="busesCombobox"
+                materialDesign:HintAssist.Hint="Select A Bus"
+                materialDesign:TextFieldAssist.HasClearButton="True"            
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Margin="0 0 0 10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Plate}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <ComboBox 
+                x:Name="driversCombobox"
+                materialDesign:HintAssist.Hint="Select A Driver"
+                materialDesign:TextFieldAssist.HasClearButton="True"            
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Margin="0 0 0 10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <DatePicker
+                x:Name="tripDate"
+                materialDesign:HintAssist.Hint="Pick Date"
+                Margin="0 0 0 10"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+            
+            <materialDesign:TimePicker
+                x:Name="tripTime"
+                Is24Hours="True"
+                Margin="0 0 0 25"
+                Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+
+            <Grid>
+                <Button
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Height="40"
+                    materialDesign:ButtonAssist.CornerRadius="5">
+                    <TextBlock
+                        Text="Add Trip" />
+                </Button>
+            </Grid>
+        </StackPanel> 
+    </Border>
 </Window>
