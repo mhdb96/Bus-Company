@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
+using TASLibrary;
 using TASLibrary.Enums;
 
 namespace TASUI.CreateForms
@@ -34,11 +35,11 @@ namespace TASUI.CreateForms
 
         private void LoadListsData()
         {
-            Destinations = DestinationModel.GetSampleData();
+            Destinations = GlobalConfig.Connection.GetDestination_All();
             destinationsCombobox.ItemsSource = Destinations;
-            Buses = BusModel.GetSampleData();
+            Buses = GlobalConfig.Connection.GetBus_All();
             busesCombobox.ItemsSource = Buses;
-            Drivers = DriverModel.GetSampleData();
+            Drivers = GlobalConfig.Connection.GetDriver_All();
             driversCombobox.ItemsSource = Drivers;
         }
     }
