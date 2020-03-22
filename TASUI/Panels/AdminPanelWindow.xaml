@@ -1,12 +1,124 @@
-﻿<Window x:Class="TASUI.Panels.AdminPanelWindow"
+﻿<Window x:Class="TASUI.Panels.AdminPanelWindow"        
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TASUI.Panels"
+        xmlns:local="clr-namespace:TASUI.CreateForms"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="AdminPanelWindow" Height="450" Width="800" Closed="Window_Closed">
-    <Grid>
-        
-    </Grid>
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="CreateTripWindow" Height="600" Width="1200">
+    
+    <Border Padding="50 30">
+        <StackPanel>
+            <Grid Margin="0 0 0 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="Trips"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
+
+                <Button
+                    Grid.Column="2"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    x:Name="AddNewTripButton" 
+                    Click="AddNewTripButton_Click"
+                    Content="Add New Trip" />
+            </Grid>
+
+            <DataGrid
+                Margin="0 8 0 0"
+                Name="dgUsers"
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                
+                <DataGrid.Columns>
+                    
+                    <DataGridTextColumn
+                        Binding="{Binding No}"
+                        Header="Trip Code"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Destination}"
+                        Header="Destination"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Date}"
+                        Header="Departure Time"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Plate}"
+                        Header="Bus Plate"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Capacity}"
+                        Header="Bus Capacity"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Driver}"
+                        Header="Bus Driver"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding SeatPrice}"
+                        Header="Seat Price"
+                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    ToolTip="Edit">
+                                    <materialDesign:PackIcon
+                                        Kind="Edit"
+                                        Height="24"
+                                        Width="24" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                    ToolTip="Delete">
+                                    <materialDesign:PackIcon
+                                        Kind="Delete"
+                                        Height="24"
+                                        Width="24" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+    </Border>
+    
 </Window>

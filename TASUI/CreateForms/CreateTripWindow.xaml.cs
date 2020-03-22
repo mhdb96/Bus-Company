@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
 using TASLibrary.Enums;
+using TASUI.Requesters;
 
 namespace TASUI.CreateForms
 {
@@ -22,13 +23,17 @@ namespace TASUI.CreateForms
     /// </summary>
     public partial class CreateTripWindow : Window
     {
+        public ICreateTripRequester CallingWindow;
+
         CLinkedList<DestinationModel> Destinations;
         CLinkedList<BusModel> Buses;
         CLinkedList<DriverModel> Drivers;
 
-        public CreateTripWindow()
+        public CreateTripWindow(ICreateTripRequester caller)
         {
             InitializeComponent();
+            CallingWindow = caller;
+
             LoadListsData();
         }
 
@@ -40,6 +45,11 @@ namespace TASUI.CreateForms
             busesCombobox.ItemsSource = Buses;
             Drivers = DriverModel.GetSampleData();
             driversCombobox.ItemsSource = Drivers;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            CallingWindow.CreateTripFormClosed();
         }
     }
 }
