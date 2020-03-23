@@ -16,6 +16,9 @@ using TASLibrary.Models;
 using TASLibrary;
 using TASLibrary.Enums;
 using TASUI.Requesters;
+using System.Xml; // bu daha sonra kaldıralacak.
+using System.Xml.Serialization;
+using System.IO;
 
 namespace TASUI.CreateForms
 {
@@ -29,6 +32,9 @@ namespace TASUI.CreateForms
         CLinkedList<DestinationModel> Destinations;
         CLinkedList<BusModel> Buses;
         CLinkedList<DriverModel> Drivers;
+
+        TripModel Trip = new TripModel();
+        string filepath = "C:\\Users\\Talha\\source\\repos\\Bus-Company\\trips.txt";
 
         public CreateTripWindow(ICreateTripRequester caller)
         {
@@ -51,6 +57,30 @@ namespace TASUI.CreateForms
         private void Window_Closed(object sender, EventArgs e)
         {
             CallingWindow.CreateTripFormClosed();
+        }
+
+        private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
+        {
+            int tripCode = int.Parse(tripCodeTextBox.Text);
+            string destination = destinationsCombobox.SelectedItem.ToString();
+            string bus = busesCombobox.SelectedItem.ToString();
+            string driver = driversCombobox.SelectedItem.ToString();
+            string date = tripDate.SelectedDate.ToString();
+            string time = tripTime.SelectedTime.ToString();
+
+            CLinkedList<DestinationModel> destinationData = new CLinkedList<DestinationModel>();
+            destinationData.AddLast(new DestinationModel(destination));
+
+            CLinkedList<BusModel> busData = new CLinkedList<BusModel>();
+            busData.AddLast(new BusModel(bus, 20));
+
+            CLinkedList<DriverModel> driverData = new CLinkedList<DriverModel>();
+            driverData.AddLast(new DriverModel(driver));
+
+            Trip.z = new CLinkedList<TripModel> {
+                //new TripModel { No = tripCode, Destination = destinationData },
+            };
+            Trip.XMLKaydet();
         }
     }
 }

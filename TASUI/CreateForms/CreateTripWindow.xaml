@@ -14,10 +14,11 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Create New Trip" Height="480" Width="320">
-    <Border Padding="10 35">
+    <Border Padding="15 35">
         <StackPanel>
 
             <TextBox
+                x:Name="tripCodeTextBox"
                 materialDesign:HintAssist.Hint="Trip Code"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 VerticalAlignment="Center"
@@ -78,7 +79,9 @@
                 <Button
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="5">
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    x:Name="AddNewTripButton" 
+                    Click="AddNewTripButton_Click">
                     <TextBlock
                         Text="Add Trip" />
                 </Button>
