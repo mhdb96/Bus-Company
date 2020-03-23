@@ -33,14 +33,6 @@ namespace TASLibrary.Models
             return (Name == other.Name && Sex == other.Sex);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = 1423121277;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-            hashCode = hashCode * -1521134295 + Sex.GetHashCode();
-            return hashCode;
-        }
-
         public static bool operator ==(PassengerModel lhs, PassengerModel rhs)
         {
 

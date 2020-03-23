@@ -34,14 +34,6 @@ namespace TASLibrary.Models
             return (No == other.No && Passenger == other.Passenger && Status == other.Status);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = 109669428;
-            hashCode = hashCode * -1521134295 + No.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<PassengerModel>.Default.GetHashCode(Passenger);
-            hashCode = hashCode * -1521134295 + Status.GetHashCode();
-            return hashCode;
-        }
 
         public static bool operator ==(SeatModel lhs, SeatModel rhs)
         {

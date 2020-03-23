@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.IO;
 using TASLibrary.CustomDataStructures;
 
 namespace TASLibrary.Models
@@ -38,19 +40,6 @@ namespace TASLibrary.Models
             return (No == other.No && Destination == other.Destination && Date == other.Date && Bus == other.Bus && Driver == other.Driver && SeatPrice == other.SeatPrice && Seats == other.Seats);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = 1041645192;
-            hashCode = hashCode * -1521134295 + No.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<DestinationModel>.Default.GetHashCode(Destination);
-            hashCode = hashCode * -1521134295 + Date.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<BusModel>.Default.GetHashCode(Bus);
-            hashCode = hashCode * -1521134295 + EqualityComparer<DriverModel>.Default.GetHashCode(Driver);
-            hashCode = hashCode * -1521134295 + SeatPrice.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<CLinkedList<SeatModel>>.Default.GetHashCode(Seats);
-            return hashCode;
-        }
-
         public static bool operator ==(TripModel lhs, TripModel rhs)
         {
 
@@ -69,5 +58,14 @@ namespace TASLibrary.Models
             return !(lhs == rhs);
         }
 
+        public CLinkedList<TripModel> z { get; set; }
+        public void XMLKaydet()
+        {
+            var xml = new XmlSerializer(typeof(TripModel));
+            using (StreamWriter sw = new StreamWriter(@"C:\\Users\\Talha\\source\\repos\\Bus-Company\\trips.txt"))
+            {
+                xml.Serialize(sw, this);
+            }
+        }
     }
 }

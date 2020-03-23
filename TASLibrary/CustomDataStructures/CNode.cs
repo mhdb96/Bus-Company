@@ -51,15 +51,6 @@ namespace TASLibrary.CustomDataStructures
             return (Data == other.Data && Next == other.Next && Prev == other.Prev);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = 1272966573;
-            hashCode = hashCode * -1521134295 + EqualityComparer<T>.Default.GetHashCode(Data);
-            hashCode = hashCode * -1521134295 + EqualityComparer<CNode<T>>.Default.GetHashCode(Next);
-            hashCode = hashCode * -1521134295 + EqualityComparer<CNode<T>>.Default.GetHashCode(Prev);
-            return hashCode;
-        }
-
         public static bool operator ==(CNode<T> lhs, CNode<T> rhs)
         {
 
