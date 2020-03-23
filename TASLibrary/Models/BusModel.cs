@@ -7,7 +7,7 @@ using TASLibrary.CustomDataStructures;
 
 namespace TASLibrary.Models
 {
-    public class BusModel
+    public class BusModel: IEquatable<BusModel>
     {
         public string Plate { get; set; }
         public int Capacity { get; set; }
@@ -32,6 +32,59 @@ namespace TASLibrary.Models
             Data.AddLast(new BusModel("ASD4444", 70));
             Data.AddLast(new BusModel("ASD5555", 80));
             return Data;
+        }
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as BusModel);
+        }
+        public override int GetHashCode()
+        {
+            int hashCode = 1423121277;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Plate);
+            hashCode = hashCode * -1721457278 + EqualityComparer<int>.Default.GetHashCode(Capacity);
+            return hashCode;
+        }
+        public bool Equals(BusModel other)
+        {
+            // If parameter is null, return false.
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            // Optimization for a common success case.
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            // If run-time types are not exactly the same, return false.
+            if (this.GetType() != other.GetType())
+            {
+                return false;
+            }
+            // Return true if the fields match.
+            // Note that the base class is not invoked because it is
+            // System.Object, which defines Equals as reference equality.
+            return (Plate == other.Plate) && (Capacity == other.Capacity);
+        }
+        public static bool operator ==(BusModel lhs, BusModel rhs)
+        {
+            // Check for null on left side.
+            if (Object.ReferenceEquals(lhs, null))
+            {
+                if (Object.ReferenceEquals(rhs, null))
+                {
+                    // null == null = true.
+                    return true;
+                }
+                // Only the left side is null.
+                return false;
+            }
+            // Equals handles case of null on right side.
+            return lhs.Equals(rhs);
+        }
+        public static bool operator !=(BusModel lhs, BusModel rhs)
+        {
+            return !(lhs == rhs);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TASLibrary.CustomDataStructures
 {
-    public class CLinkedList<T> : IEnumerable<T>
+    public class CLinkedList<T> : IEnumerable<T>, IEquatable<CLinkedList<T>> where T : class
     {
         private CNode<T> _head;
         private CNode<T> _tail;
@@ -278,5 +278,51 @@ namespace TASLibrary.CustomDataStructures
             return GetEnumerator();
         }
 
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as CLinkedList<T>);
+        }
+        public bool Equals(CLinkedList<T> other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            if (this.GetType() != other.GetType())
+            {
+                return false;
+            }
+            return (_head == other._head && _count == other._count);
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -566824587;
+            hashCode = hashCode * -1521134295 + EqualityComparer<CNode<T>>.Default.GetHashCode(_head);
+            hashCode = hashCode * -1521134295 + _count.GetHashCode();
+            return hashCode;
+        }
+
+        public static bool operator ==(CLinkedList<T> lhs, CLinkedList<T> rhs)
+        {
+
+            if (Object.ReferenceEquals(lhs, null))
+            {
+                if (Object.ReferenceEquals(rhs, null))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return lhs.Equals(rhs);
+        }
+        public static bool operator !=(CLinkedList<T> lhs, CLinkedList<T> rhs)
+        {
+            return !(lhs == rhs);
+        }
     }
 }
