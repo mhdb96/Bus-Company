@@ -52,10 +52,6 @@ namespace TASLibrary.Models
             return (Name == other.Name);
         }
 
-        public override int GetHashCode()
-        {
-            return 539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
-        }
 
         public static bool operator ==(DriverModel lhs, DriverModel rhs)
         {

@@ -33,17 +33,13 @@ namespace TASLibrary.Models
             Data.AddLast(new BusModel("ASD5555", 80));
             return Data;
         }
+
+        
         public override bool Equals(object obj)
         {
             return this.Equals(obj as BusModel);
         }
-        public override int GetHashCode()
-        {
-            int hashCode = 1423121277;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Plate);
-            hashCode = hashCode * -1721457278 + EqualityComparer<int>.Default.GetHashCode(Capacity);
-            return hashCode;
-        }
+
         public bool Equals(BusModel other)
         {
             // If parameter is null, return false.
@@ -66,6 +62,8 @@ namespace TASLibrary.Models
             // System.Object, which defines Equals as reference equality.
             return (Plate == other.Plate) && (Capacity == other.Capacity);
         }
+
+
         public static bool operator ==(BusModel lhs, BusModel rhs)
         {
             // Check for null on left side.
@@ -85,6 +83,12 @@ namespace TASLibrary.Models
         public static bool operator !=(BusModel lhs, BusModel rhs)
         {
             return !(lhs == rhs);
+        }
+
+        public override string ToString()
+        {
+            string s = "ttt";
+            return s;
         }
     }
 }

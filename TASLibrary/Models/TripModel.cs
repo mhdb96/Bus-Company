@@ -38,19 +38,6 @@ namespace TASLibrary.Models
             return (No == other.No && Destination == other.Destination && Date == other.Date && Bus == other.Bus && Driver == other.Driver && SeatPrice == other.SeatPrice && Seats == other.Seats);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = 1041645192;
-            hashCode = hashCode * -1521134295 + No.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<DestinationModel>.Default.GetHashCode(Destination);
-            hashCode = hashCode * -1521134295 + Date.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<BusModel>.Default.GetHashCode(Bus);
-            hashCode = hashCode * -1521134295 + EqualityComparer<DriverModel>.Default.GetHashCode(Driver);
-            hashCode = hashCode * -1521134295 + SeatPrice.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<CLinkedList<SeatModel>>.Default.GetHashCode(Seats);
-            return hashCode;
-        }
-
         public static bool operator ==(TripModel lhs, TripModel rhs)
         {
 
