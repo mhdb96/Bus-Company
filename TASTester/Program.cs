@@ -24,12 +24,12 @@ namespace TASTester
             //BusModel b = new BusModel("ASD1111", 50);
             //Data.AddLast(b);
             Data.AddLast(new BusModel("ASD1111", 50));
-            Data.AddLast(new BusModel("ASD2222", 25));
+            Data.AddLast(new BusModel("ASD2222", 50));
             Data.AddLast(new BusModel("ASD3333", 30));
             //Data.RemoveLast();
             Data.AddLast(new BusModel("ASD4444", 70));
             Data.AddLast(new BusModel("ASD5555", 80));
-            Console.WriteLine(Data.Remove(new BusModel("ASD1113", 50))); ;
+            Console.WriteLine(Data.Find(x => x.Capacity == 80).Plate);
             //Data.RemoveFirst();
             //Data.AddFirst(new BusModel("ASD0000", 80));
             //Console.WriteLine(Data.Last.Plate);

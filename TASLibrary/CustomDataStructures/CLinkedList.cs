@@ -5,6 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime;
+using System.Runtime.Versioning;
+using System.Diagnostics.Contracts;
+using System.Collections.ObjectModel;
+using System.Security.Permissions;
 
 namespace TASLibrary.CustomDataStructures
 {
@@ -248,9 +253,49 @@ namespace TASLibrary.CustomDataStructures
             {
                 return InternalFind(data).Data;
             }
-            return default(T);
-            
+            return default(T);            
         }
+
+        public T Find(Predicate<T> match)
+        {
+            if (match == null)
+            {
+                throw new ArgumentNullException();
+            }
+            //??? Contract.EndContractBlock();
+            CNode<T> currentNode = _head; 
+            while (currentNode != null)
+            {
+                if (match(currentNode.Data))
+                {
+                    return currentNode.Data;
+                }
+                currentNode = currentNode.Next;
+            }
+            return default(T);
+        }
+
+        public CLinkedList<T> FindAll(Predicate<T> match)
+        {
+            if (match == null)
+            {
+                throw new ArgumentNullException();
+            }
+            //??? Contract.EndContractBlock();
+            CLinkedList<T> results = new CLinkedList<T>();
+            CNode<T> currentNode = _head;
+            while (currentNode != null)
+            {
+                if (match(currentNode.Data))
+                {
+                    results.AddLast(currentNode.Data);
+                }
+                currentNode = currentNode.Next;
+            }
+
+            return results;
+        }
+
         public void AddBefore(int index)
         {
 
