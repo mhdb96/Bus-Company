@@ -24,5 +24,15 @@ namespace TASLibrary.DataAccess
         {
             return DriverModel.GetSampleData();
         }
+
+        public CLinkedList<TripModel> GetTrip_All()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Trip_InsertAll(CLinkedList<TripModel> trips)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

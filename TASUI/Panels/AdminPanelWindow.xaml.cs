@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TASUI.Requesters;
 using TASUI.CreateForms;
+using TASLibrary.CustomDataStructures;
+using TASLibrary.Models;
+using TASLibrary.Enums;
 
 namespace TASUI.Panels
 {
@@ -22,58 +25,69 @@ namespace TASUI.Panels
     public partial class AdminPanelWindow : Window, ICreateTripRequester
     {
         public IAdminPanelRequester CallingWindow;
-        public AdminPanelWindow(IAdminPanelRequester caller)
+        CLinkedList<TripModel> Trips;
+        //List<TripModel> TripList = new List<TripModel>();
+        public AdminPanelWindow(/*IAdminPanelRequester caller*/)
         {
             InitializeComponent();
-            CallingWindow = caller;
+            //CallingWindow = caller;
 
-            List<Trip> trips = new List<Trip>();
-            trips.Add(new Trip() { No = 1, Destination = "Kocaeli - Ankara",   Date = new DateTime(2020, 3, 21), Plate = "34 IST 1453", Capacity = 25, Driver = "Talha AYDIN",     SeatPrice = 49 });
-            trips.Add(new Trip() { No = 2, Destination = "Kocaeli - Izmir",    Date = new DateTime(2020, 3, 22), Plate = "58 SVS 1998", Capacity = 25, Driver = "Muhammed Bedavi", SeatPrice = 70 });
-            trips.Add(new Trip() { No = 3, Destination = "Kocaeli - Istanbul", Date = new DateTime(2020, 3, 23), Plate = "41 KOU 2001", Capacity = 25, Driver = "Ali Karakuş",     SeatPrice = 110 });
-            trips.Add(new Trip() { No = 4, Destination = "Kocaeli - Izmir", Date = new DateTime(2020, 3, 22), Plate = "58 SVS 1998", Capacity = 25, Driver = "Muhammed Bedavi", SeatPrice = 70 });
-            trips.Add(new Trip() { No = 5, Destination = "Kocaeli - Istanbul", Date = new DateTime(2020, 3, 23), Plate = "41 KOU 2001", Capacity = 25, Driver = "Ali Karakuş", SeatPrice = 110 });
-            trips.Add(new Trip() { No = 6, Destination = "Kocaeli - Izmir", Date = new DateTime(2020, 3, 22), Plate = "58 SVS 1998", Capacity = 25, Driver = "Muhammed Bedavi", SeatPrice = 70 });
-            trips.Add(new Trip() { No = 7, Destination = "Kocaeli - Istanbul", Date = new DateTime(2020, 3, 23), Plate = "41 KOU 2001", Capacity = 25, Driver = "Ali Karakuş", SeatPrice = 110 });
-            trips.Add(new Trip() { No = 8, Destination = "Kocaeli - Ankara", Date = new DateTime(2020, 3, 21), Plate = "34 IST 1453", Capacity = 25, Driver = "Talha AYDIN", SeatPrice = 49 });
-            trips.Add(new Trip() { No = 9, Destination = "Kocaeli - Izmir", Date = new DateTime(2020, 3, 22), Plate = "58 SVS 1998", Capacity = 25, Driver = "Muhammed Bedavi", SeatPrice = 70 });
-            trips.Add(new Trip() { No = 10, Destination = "Kocaeli - Istanbul", Date = new DateTime(2020, 3, 23), Plate = "41 KOU 2001", Capacity = 25, Driver = "Ali Karakuş", SeatPrice = 110 });
+            Trips = TripModel.GetSampleData();
+            //test();
+            dgUsers.ItemsSource = Trips;
 
-            dgUsers.ItemsSource = trips;
         }
+
+        private void WireUpLists()
+        {
+            dgUsers.ItemsSource = null;
+            dgUsers.Items.Clear();
+            dgUsers.ItemsSource = Trips;
+        }
+
+        //private void test()
+        //{
+        //    TripModel model = new TripModel();
+        //    model.No = 22;
+        //    model.Destination.Name = "Kocaeli";
+        //    model.Bus.Capacity = 10;
+        //    model.Bus.Plate = "ASD1234";
+        //    model.Driver.Name = "Ahmet";
+        //    model.Date = DateTime.Now;
+        //    model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+        //    TripModel test = new TripModel();
+        //    test.No = 22;
+        //    test.Destination.Name = "Locaeli";
+        //    test.Bus.Capacity = 17;
+        //    test.Bus.Plate = "ASD1234";
+        //    test.Driver.Name = "Ahmet";
+        //    test.Date = DateTime.Now;
+        //    test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+        //    TripList.Add(model);
+        //    TripList.Add(test);
+        //}
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateTripWindow createTrip = new CreateTripWindow(/*this*/);
+            CreateTripWindow createTrip = new CreateTripWindow(this);
             this.Hide();
             createTrip.ShowDialog();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            CallingWindow.AdminPanelClosed();
+            //CallingWindow.AdminPanelClosed();
         }
 
         public void CreateTripFormClosed()
         {
             this.Show();
         }
-    }
 
-    public class Trip
-    {
-        public int No { get; set; }
-
-        public string Destination { get; set; }
-
-        public DateTime Date { get; set; }
-
-        public string Plate { get; set; }
-
-        public int Capacity { get; set; }
-
-        public string Driver { get; set; }
-
-        public decimal SeatPrice { get; set; }
+        public void TripCreated(TripModel model)
+        {
+            Trips.AddLast(model);
+            WireUpLists();
+        }
     }
 }

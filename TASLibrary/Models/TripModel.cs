@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 using TASLibrary.CustomDataStructures;
 using System.Runtime.Serialization;
+using TASLibrary.Enums;
 
 namespace TASLibrary.Models
 {
@@ -20,6 +21,35 @@ namespace TASLibrary.Models
         public DriverModel Driver { get; set; } = new DriverModel();
         public decimal SeatPrice { get; set; }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
+
+        public TripModel()
+        {
+
+        }
+
+        public static CLinkedList<TripModel> GetSampleData()
+        {
+            CLinkedList<TripModel> trips = new CLinkedList<TripModel>();
+            TripModel model = new TripModel();
+            model.No = 22;
+            model.Destination.Name = "Kocaeli";
+            model.Bus.Capacity = 10;
+            model.Bus.Plate = "ASD1234";
+            model.Driver.Name = "Ahmet";
+            model.Date = DateTime.Now;
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+            TripModel test = new TripModel();
+            test.No = 22;
+            test.Destination.Name = "Locaeli";
+            test.Bus.Capacity = 17;
+            test.Bus.Plate = "ASD1234";
+            test.Driver.Name = "Ahmet";
+            test.Date = DateTime.Now;
+            test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+            trips.AddLast(model);
+            trips.AddLast(test);
+            return trips;
+        }
 
         public override bool Equals(object obj)
         {
@@ -81,7 +111,19 @@ namespace TASLibrary.Models
             info.AddValue("Bus", Bus);
             info.AddValue("Driver", Driver);
             info.AddValue("SeatPrice", SeatPrice);
-            info.AddValue("Seats", Seats);
+            
+            if(Bus.Capacity == Seats.Count && Seats.Count != 0)
+            {
+                info.AddValue("Seats", Seats);
+            }
+            else
+            {
+                for (int i = 0; i < Bus.Capacity; i++)
+                {
+                    Seats.AddLast(new SeatModel(i, new PassengerModel(), SeatStatus.Empty));
+                }
+                info.AddValue("Seats", Seats);
+            }            
         }
 
         public TripModel(SerializationInfo info, StreamingContext context)
@@ -94,10 +136,6 @@ namespace TASLibrary.Models
             Driver = (DriverModel)info.GetValue("Driver", typeof(DriverModel));
             SeatPrice = (decimal)info.GetValue("SeatPrice", typeof(decimal));
             Seats = (CLinkedList<SeatModel>)info.GetValue("Seats", typeof(CLinkedList<SeatModel>));
-        }
-        public TripModel()
-        {
-
         }
     }
 }

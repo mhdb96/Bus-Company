@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="CreateTripWindow" Height="600" Width="1200">
+        Title="CreateTripWindow" Height="600" Width="1200"
+        Closed="Window_Closed">
     
     <Border Padding="50 30">
         <StackPanel>
@@ -45,6 +46,7 @@
                 CanUserSortColumns="True"
                 CanUserAddRows="False"
                 AutoGenerateColumns="False"
+                IsReadOnly="True"
                 materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                 materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                 
@@ -52,38 +54,31 @@
                     
                     <DataGridTextColumn
                         Binding="{Binding No}"
-                        Header="Trip Code"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Header="Trip Code" />
                     
                     <materialDesign:DataGridTextColumn
-                        Binding="{Binding Destination}"
-                        Header="Destination"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding Destination.Name}"
+                        Header="Destination" />
                     
                     <materialDesign:DataGridTextColumn
                         Binding="{Binding Date}"
-                        Header="Departure Time"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Header="Departure Time" />
                     
                     <materialDesign:DataGridTextColumn
-                        Binding="{Binding Plate}"
-                        Header="Bus Plate"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding Bus.Plate}"
+                        Header="Bus Plate" />
                     
                     <materialDesign:DataGridTextColumn
-                        Binding="{Binding Capacity}"
-                        Header="Bus Capacity"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding Bus.Capacity}"
+                        Header="Bus Capacity" />
                     
                     <materialDesign:DataGridTextColumn
-                        Binding="{Binding Driver}"
-                        Header="Bus Driver"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Binding="{Binding Driver.Name}"
+                        Header="Bus Driver" />
                     
                     <materialDesign:DataGridTextColumn
                         Binding="{Binding SeatPrice}"
-                        Header="Seat Price"
-                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                        Header="Seat Price" />
                     
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

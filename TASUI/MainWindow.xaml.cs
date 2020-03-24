@@ -35,7 +35,7 @@ namespace TASUI
 
         private void AdminLoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            AdminPanelWindow admin = new AdminPanelWindow(this);
+            AdminPanelWindow admin = new AdminPanelWindow(/*this*/);
             this.Hide();
             admin.ShowDialog();
         }

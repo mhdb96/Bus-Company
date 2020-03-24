@@ -13,5 +13,7 @@ namespace TASLibrary.DataAccess
         CLinkedList<BusModel> GetBus_All();
         CLinkedList<DestinationModel> GetDestination_All();
         CLinkedList<DriverModel> GetDriver_All();
+        CLinkedList<TripModel> GetTrip_All();
+        void Trip_InsertAll(CLinkedList<TripModel> trips);
     }
 }

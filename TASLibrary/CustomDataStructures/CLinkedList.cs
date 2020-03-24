@@ -350,11 +350,16 @@ namespace TASLibrary.CustomDataStructures
         public IEnumerator<T> GetEnumerator()
         {
             CNode<T> currentNode = _head;
-            while (currentNode != null)
+            for (int i = 0; i < _count; i++)
             {
                 yield return currentNode.Data;
                 currentNode = currentNode.Next;
             }
+            //while (currentNode != null)
+            //{
+            //    yield return currentNode.Data;
+            //    currentNode = currentNode.Next;
+            //}
         }
         IEnumerator IEnumerable.GetEnumerator()
         {

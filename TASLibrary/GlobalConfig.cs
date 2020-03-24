@@ -11,8 +11,8 @@ namespace TASLibrary
         public static IDataConnection Connection { get; private set; }
         public static void InitializeConnections()
         {
-            //Connection = new TextFileConnector();
-            Connection = new PseudoConnector();
+            Connection = new TextFileConnector();
+            //Connection = new PseudoConnector();
         }
     }
 }
