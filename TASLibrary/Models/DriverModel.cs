@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TASLibrary.CustomDataStructures;
 
 namespace TASLibrary.Models
 {
-    public class DriverModel : IEquatable<DriverModel>
+    [Serializable]
+    public class DriverModel : IEquatable<DriverModel>, ISerializable
     {
         public string Name { get; set; }
 
@@ -52,6 +54,10 @@ namespace TASLibrary.Models
             return (Name == other.Name);
         }
 
+        public override int GetHashCode()
+        {
+            return 539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
+        }
 
         public static bool operator ==(DriverModel lhs, DriverModel rhs)
         {
@@ -69,6 +75,14 @@ namespace TASLibrary.Models
         public static bool operator !=(DriverModel lhs, DriverModel rhs)
         {
             return !(lhs == rhs);
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name, typeof(string));            
+        }
+        public DriverModel(SerializationInfo info, StreamingContext context)
+        {
+            Name = (string)info.GetValue("Name", typeof(string));            
         }
     }
 }

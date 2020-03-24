@@ -1,16 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TASLibrary.Enums;
 
 namespace TASLibrary.Models
 {
-    public class PassengerModel : IEquatable<PassengerModel>
+    [Serializable]
+    public class PassengerModel : IEquatable<PassengerModel>, ISerializable
     {
         public string Name { get; set; }
         public SexType Sex { get; set; }
+
+        public PassengerModel()
+        {
+
+        }
+        public PassengerModel(string name, SexType sex)
+        {
+            Name = name;
+            Sex = sex;
+        }
 
         public override bool Equals(object obj)
         {
@@ -33,6 +45,14 @@ namespace TASLibrary.Models
             return (Name == other.Name && Sex == other.Sex);
         }
 
+        public override int GetHashCode()
+        {
+            int hashCode = 1423121277;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + Sex.GetHashCode();
+            return hashCode;
+        }
+
         public static bool operator ==(PassengerModel lhs, PassengerModel rhs)
         {
 
@@ -49,6 +69,16 @@ namespace TASLibrary.Models
         public static bool operator !=(PassengerModel lhs, PassengerModel rhs)
         {
             return !(lhs == rhs);
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name, typeof(string));
+            info.AddValue("Sex", Sex, typeof(SexType));
+        }
+        public PassengerModel(SerializationInfo info, StreamingContext context)
+        {
+            Name = (string)info.GetValue("Name", typeof(string));
+            Sex = (SexType)info.GetValue("Sex", typeof(SexType));
         }
     }
 }

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TASLibrary.CustomDataStructures;
 
 namespace TASLibrary.Models
 {
-    public class BusModel: IEquatable<BusModel>
+    [Serializable]
+    public class BusModel : IEquatable<BusModel>, ISerializable
     {
         public string Plate { get; set; }
         public int Capacity { get; set; }
@@ -33,7 +35,6 @@ namespace TASLibrary.Models
             Data.AddLast(new BusModel("ASD5555", 80));
             return Data;
         }
-
         
         public override bool Equals(object obj)
         {
@@ -62,8 +63,6 @@ namespace TASLibrary.Models
             // System.Object, which defines Equals as reference equality.
             return (Plate == other.Plate) && (Capacity == other.Capacity);
         }
-
-
         public static bool operator ==(BusModel lhs, BusModel rhs)
         {
             // Check for null on left side.
@@ -85,10 +84,23 @@ namespace TASLibrary.Models
             return !(lhs == rhs);
         }
 
-        public override string ToString()
+        public override int GetHashCode()
         {
-            string s = "ttt";
-            return s;
+            int hashCode = -724381756;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Plate);
+            hashCode = hashCode * -1521134295 + Capacity.GetHashCode();
+            return hashCode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Plate", Plate, typeof(string));
+            info.AddValue("Capacity", Capacity, typeof(int));
+        }
+        public BusModel (SerializationInfo info, StreamingContext context)
+        {            
+            Plate = (string)info.GetValue("Plate", typeof(string));
+            Capacity = (int)info.GetValue("Capacity", typeof(int));
         }
     }
 }

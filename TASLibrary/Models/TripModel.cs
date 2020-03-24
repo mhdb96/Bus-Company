@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
 using TASLibrary.CustomDataStructures;
+using System.Runtime.Serialization;
 
 namespace TASLibrary.Models
 {
-    public class TripModel : IEquatable<TripModel>
+    [Serializable]
+    public class TripModel : IEquatable<TripModel>, ISerializable
     {
         public int No { get; set; }
-        public DestinationModel Destination { get; set; }
+        public DestinationModel Destination { get; set; } = new DestinationModel();
         public DateTime Date { get; set; }
-        public BusModel Bus { get; set; }
-        public DriverModel Driver { get; set; }
+        public BusModel Bus { get; set; } = new BusModel();
+        public DriverModel Driver { get; set; } = new DriverModel();
         public decimal SeatPrice { get; set; }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
 
@@ -58,14 +60,44 @@ namespace TASLibrary.Models
             return !(lhs == rhs);
         }
 
-        public CLinkedList<TripModel> z { get; set; }
-        public void XMLKaydet()
+        public override int GetHashCode()
         {
-            var xml = new XmlSerializer(typeof(TripModel));
-            using (StreamWriter sw = new StreamWriter(@"C:\\Users\\Talha\\source\\repos\\Bus-Company\\trips.txt"))
-            {
-                xml.Serialize(sw, this);
-            }
+            int hashCode = -1098416267;
+            hashCode = hashCode * -1521134295 + No.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<DestinationModel>.Default.GetHashCode(Destination);
+            hashCode = hashCode * -1521134295 + Date.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<BusModel>.Default.GetHashCode(Bus);
+            hashCode = hashCode * -1521134295 + EqualityComparer<DriverModel>.Default.GetHashCode(Driver);
+            hashCode = hashCode * -1521134295 + SeatPrice.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<CLinkedList<SeatModel>>.Default.GetHashCode(Seats);            
+            return hashCode;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("No", No);
+            info.AddValue("Destination", Destination);
+            info.AddValue("Date", Date);
+            info.AddValue("Bus", Bus);
+            info.AddValue("Driver", Driver);
+            info.AddValue("SeatPrice", SeatPrice);
+            info.AddValue("Seats", Seats);
+        }
+
+        public TripModel(SerializationInfo info, StreamingContext context)
+        {
+            // Reset the property value using the GetValue method.
+            No = (int)info.GetValue("No", typeof(int));
+            Destination = (DestinationModel)info.GetValue("Destination", typeof(DestinationModel));
+            Date = (DateTime)info.GetValue("Date", typeof(DateTime));
+            Bus = (BusModel)info.GetValue("Bus", typeof(BusModel));
+            Driver = (DriverModel)info.GetValue("Driver", typeof(DriverModel));
+            SeatPrice = (decimal)info.GetValue("SeatPrice", typeof(decimal));
+            Seats = (CLinkedList<SeatModel>)info.GetValue("Seats", typeof(CLinkedList<SeatModel>));
+        }
+        public TripModel()
+        {
+
         }
     }
 }

@@ -44,7 +44,7 @@ namespace TASUI.Panels
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateTripWindow createTrip = new CreateTripWindow(this);
+            CreateTripWindow createTrip = new CreateTripWindow(/*this*/);
             this.Hide();
             createTrip.ShowDialog();
         }

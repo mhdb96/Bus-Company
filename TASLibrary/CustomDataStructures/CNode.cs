@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TASLibrary.CustomDataStructures
 {
-    public class CNode <T> : IEquatable<CNode<T>> where T : class
+    [Serializable]
+    public class CNode<T> : IEquatable<CNode<T>>, ISerializable where T : class
     {
         public T Data;
         public CNode<T> Next;
@@ -51,6 +53,13 @@ namespace TASLibrary.CustomDataStructures
             return (Data == other.Data && Next == other.Next && Prev == other.Prev);
         }
 
+        public override int GetHashCode()
+        {
+            int hashCode = 1272966573;
+            hashCode = hashCode * -1521134295 + EqualityComparer<T>.Default.GetHashCode(Data);
+            return hashCode;
+        }
+
         public static bool operator ==(CNode<T> lhs, CNode<T> rhs)
         {
 
@@ -67,6 +76,14 @@ namespace TASLibrary.CustomDataStructures
         public static bool operator !=(CNode<T> lhs, CNode<T> rhs)
         {
             return !(lhs == rhs);
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Data", Data, typeof(T));
+        }
+        public CNode(SerializationInfo info, StreamingContext context)
+        {
+            Data = (T)info.GetValue("Data", typeof(T));
         }
     }
 }

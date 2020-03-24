@@ -10,14 +10,17 @@ using System.Runtime.Versioning;
 using System.Diagnostics.Contracts;
 using System.Collections.ObjectModel;
 using System.Security.Permissions;
+using System.Runtime.Serialization;
 
 namespace TASLibrary.CustomDataStructures
 {
-    public class CLinkedList<T> : IEnumerable<T>, IEquatable<CLinkedList<T>> where T : class
+    [Serializable]
+    public class CLinkedList<T> : IEnumerable<T>, IEquatable<CLinkedList<T>>, ISerializable, IDeserializationCallback where T : class
     {
         private CNode<T> _head;
         private CNode<T> _tail;
         private int _count;
+        private SerializationInfo siInfo;
 
         public T First {
             get
@@ -55,6 +58,22 @@ namespace TASLibrary.CustomDataStructures
         public CLinkedList()
         {
             _count = 0;
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+            if (_count != 0)
+            {
+                T[] array = CreateArray();                
+                info.AddValue("values", array, typeof(T[]));
+            }
+        }
+        public CLinkedList(SerializationInfo info, StreamingContext context)
+        {
+            siInfo = info;
         }
         private void AddNodeToEmptyList(CNode<T> newNode)
         {
@@ -305,6 +324,25 @@ namespace TASLibrary.CustomDataStructures
 
         }
 
+        private T[] CreateArray()
+        {
+            T[] array = new T[_count];
+            CNode<T> currentNode = _head;
+            for (int i = 0; i < _count; i++)
+            {
+                array[i] = currentNode.Data;
+                currentNode = currentNode.Next;
+            }            
+            return array;
+        }
+        private void CreateList(T[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                AddLast(array[i]);
+            }
+        }
+
         //IEnumerator<T> IEnumerable<T>.GetEnumerator()
         //{
         //    return GetEnumerator();
@@ -344,6 +382,15 @@ namespace TASLibrary.CustomDataStructures
             return (_head == other._head && _count == other._count);
         }
 
+        public override int GetHashCode()
+        {
+            int hashCode = -33681659;
+            hashCode = hashCode * -1521134295 + EqualityComparer<CNode<T>>.Default.GetHashCode(_head);
+            hashCode = hashCode * -1521134295 + EqualityComparer<CNode<T>>.Default.GetHashCode(_tail);
+            hashCode = hashCode * -1521134295 + _count.GetHashCode();
+            return hashCode;
+        }
+
         public static bool operator ==(CLinkedList<T> lhs, CLinkedList<T> rhs)
         {
 
@@ -360,6 +407,16 @@ namespace TASLibrary.CustomDataStructures
         public static bool operator !=(CLinkedList<T> lhs, CLinkedList<T> rhs)
         {
             return !(lhs == rhs);
+        }
+        public void Add(T data)
+        {
+
+        }
+
+        public void OnDeserialization(object sender)
+        {
+            T[] array = (T[])siInfo.GetValue("values", typeof(T[]));
+            CreateList(array);
         }
     }
 }

@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TASLibrary.CustomDataStructures;
 
 namespace TASLibrary.Models
 {
-    public class DestinationModel : IEquatable<DestinationModel>
+    [Serializable]
+    public class DestinationModel : IEquatable<DestinationModel>, ISerializable
     {
         public string Name { get; set; }
 
@@ -34,7 +36,6 @@ namespace TASLibrary.Models
             return this.Equals(obj as DestinationModel);
         }
 
-
         public bool Equals(DestinationModel other)
         {            
             if (Object.ReferenceEquals(other, null))
@@ -50,6 +51,20 @@ namespace TASLibrary.Models
                 return false;
             }            
             return (Name == other.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return 539060726 + EqualityComparer<string>.Default.GetHashCode(Name);
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name, typeof(string));
+        }
+        public DestinationModel(SerializationInfo info, StreamingContext context)
+        {
+            Name = (string)info.GetValue("Name", typeof(string));            
         }
 
         public static bool operator ==(DestinationModel lhs, DestinationModel rhs)
