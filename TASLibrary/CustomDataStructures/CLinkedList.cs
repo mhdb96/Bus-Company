@@ -11,16 +11,19 @@ using System.Diagnostics.Contracts;
 using System.Collections.ObjectModel;
 using System.Security.Permissions;
 using System.Runtime.Serialization;
+using System.Collections.Specialized;
 
 namespace TASLibrary.CustomDataStructures
 {
     [Serializable]
-    public class CLinkedList<T> : IEnumerable<T>, IEquatable<CLinkedList<T>>, ISerializable, IDeserializationCallback where T : class
+    public class CLinkedList<T> : ICollection<T>, IEquatable<CLinkedList<T>>, ISerializable, IDeserializationCallback, INotifyCollectionChanged where T : class
     {
         private CNode<T> _head;
         private CNode<T> _tail;
         private int _count;
         private SerializationInfo siInfo;
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         public T First {
             get
@@ -41,6 +44,11 @@ namespace TASLibrary.CustomDataStructures
             {
                 return _count;
             }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
         }
 
         public T this[int index]
@@ -67,7 +75,8 @@ namespace TASLibrary.CustomDataStructures
             }
             if (_count != 0)
             {
-                T[] array = CreateArray();                
+                T[] array = new T[_count];
+                CopyTo(array, 0);                
                 info.AddValue("values", array, typeof(T[]));
             }
         }
@@ -97,6 +106,10 @@ namespace TASLibrary.CustomDataStructures
                 _tail = newNode;
             }
             _count++;
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add,newNode.Data));
+            }
         }
         public void AddFirst(T data)
         {
@@ -324,17 +337,7 @@ namespace TASLibrary.CustomDataStructures
 
         }
 
-        private T[] CreateArray()
-        {
-            T[] array = new T[_count];
-            CNode<T> currentNode = _head;
-            for (int i = 0; i < _count; i++)
-            {
-                array[i] = currentNode.Data;
-                currentNode = currentNode.Next;
-            }            
-            return array;
-        }
+
         private void CreateList(T[] array)
         {
             for (int i = 0; i < array.Length; i++)
@@ -415,13 +418,31 @@ namespace TASLibrary.CustomDataStructures
         }
         public void Add(T data)
         {
-
+            AddLast(data);
         }
 
         public void OnDeserialization(object sender)
         {
             T[] array = (T[])siInfo.GetValue("values", typeof(T[]));
             CreateList(array);
+        }
+
+        public bool Contains(T data)
+        {
+            return Find(data) != null;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            CNode<T> currentNode = _head;
+            if (currentNode != null)
+            {
+                do
+                {
+                    array[arrayIndex++] = currentNode.Data;
+                    currentNode = currentNode.Next;
+                } while (currentNode != null);
+            }
         }
     }
 }

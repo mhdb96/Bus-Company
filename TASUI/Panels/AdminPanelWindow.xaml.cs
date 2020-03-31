@@ -26,46 +26,47 @@ namespace TASUI.Panels
     {
         public IAdminPanelRequester CallingWindow;
         CLinkedList<TripModel> Trips;
-        //List<TripModel> TripList = new List<TripModel>();
+        List<TripModel> TripList = new List<TripModel>();
         public AdminPanelWindow(/*IAdminPanelRequester caller*/)
         {
             InitializeComponent();
             //CallingWindow = caller;
-
             Trips = TripModel.GetSampleData();
             //test();
             dgUsers.ItemsSource = Trips;
-
         }
 
         private void WireUpLists()
         {
-            dgUsers.ItemsSource = null;
-            dgUsers.Items.Clear();
-            dgUsers.ItemsSource = Trips;
+            //dgUsers.ItemsSource = null;
+            //dgUsers.Items.Clear();
+            //dgUsers.ItemsSource = TripList;
+            //dgUsers.ItemsSource = null;
+            //dgUsers.Items.Clear();
+           // dgUsers.ItemsSource = Trips;
         }
 
-        //private void test()
-        //{
-        //    TripModel model = new TripModel();
-        //    model.No = 22;
-        //    model.Destination.Name = "Kocaeli";
-        //    model.Bus.Capacity = 10;
-        //    model.Bus.Plate = "ASD1234";
-        //    model.Driver.Name = "Ahmet";
-        //    model.Date = DateTime.Now;
-        //    model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
-        //    TripModel test = new TripModel();
-        //    test.No = 22;
-        //    test.Destination.Name = "Locaeli";
-        //    test.Bus.Capacity = 17;
-        //    test.Bus.Plate = "ASD1234";
-        //    test.Driver.Name = "Ahmet";
-        //    test.Date = DateTime.Now;
-        //    test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
-        //    TripList.Add(model);
-        //    TripList.Add(test);
-        //}
+        private void test()
+        {
+            TripModel model = new TripModel();
+            model.No = 22;
+            model.Destination.Name = "Kocaeli";
+            model.Bus.Capacity = 10;
+            model.Bus.Plate = "ASD1234";
+            model.Driver.Name = "Ahmet";
+            model.Date = DateTime.Now;
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+            TripModel test = new TripModel();
+            test.No = 22;
+            test.Destination.Name = "Locaeli";
+            test.Bus.Capacity = 17;
+            test.Bus.Plate = "ASD1234";
+            test.Driver.Name = "Ahmet";
+            test.Date = DateTime.Now;
+            test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+            TripList.Add(model);
+            TripList.Add(test);
+        }
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
