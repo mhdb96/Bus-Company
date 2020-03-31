@@ -20,7 +20,7 @@
 
             <TextBox
                 x:Name="tripCodeTextBox"
-                materialDesign:HintAssist.Hint="Trip Code"
+                materialDesign:HintAssist.Hint="Trip No"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 VerticalAlignment="Center"
                 Margin="0 0 0 10"  />
@@ -91,6 +91,7 @@
                     x:Name="AddNewTripButton" 
                     Click="AddNewTripButton_Click">
                     <TextBlock
+                        x:Name="AddNewTripButtonTextBlock"
                         Text="Add Trip" />
                 </Button>
             </Grid>

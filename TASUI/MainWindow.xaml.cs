@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TASLibrary.Models;
 using TASUI.Panels;
 using TASUI.Requesters;
 
@@ -48,6 +49,11 @@ namespace TASUI
         public void AdminPanelClosed()
         {
             this.Show();
+        }
+
+        public void editTrip(TripModel trip)
+        {
+            throw new NotImplementedException();
         }
     }
 }

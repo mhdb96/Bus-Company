@@ -31,29 +31,32 @@ namespace TASLibrary.Models
         {
             CLinkedList<TripModel> trips = new CLinkedList<TripModel>();
             TripModel model = new TripModel();
-            model.No = 22;
-            model.Destination.Name = "Kocaeli";
-            model.Bus.Capacity = 10;
-            model.Bus.Plate = "ASD1234";
-            model.Driver.Name = "Ahmet";
+            model.No = 21;
+            model.Destination.Name = "Kocaeli - Ankara";
+            model.Bus.Capacity = 50;
+            model.Bus.Plate = "ASD1111";
+            model.Driver.Name = "Remzi Aslan";
             model.Date = DateTime.Now;
+            model.SeatPrice = 50;
             model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
             TripModel test = new TripModel();
             test.No = 22;
-            test.Destination.Name = "Locaeli";
-            test.Bus.Capacity = 17;
-            test.Bus.Plate = "ASD1234";
-            test.Driver.Name = "Ahmet";
+            test.Destination.Name = "Kocaeli - Izmir";
+            test.Bus.Capacity = 25;
+            test.Bus.Plate = "ASD2222";
+            test.Driver.Name = "Can Hekimoglu";
             test.Date = DateTime.Now;
+            test.SeatPrice = 75;
             test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
 
             TripModel best = new TripModel();
-            best.No = 22;
-            best.Destination.Name = "Locaeli";
-            best.Bus.Capacity = 17;
-            best.Bus.Plate = "ASD1234";
-            best.Driver.Name = "Ahmet";
+            best.No = 23;
+            best.Destination.Name = "Kocaeli - Istanbul";
+            best.Bus.Capacity = 30;
+            best.Bus.Plate = "ASD3333";
+            best.Driver.Name = "Ufuk Kantar";
             best.Date = DateTime.Now;
+            best.SeatPrice = 65;
             best.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
 
             trips.AddLast(model);

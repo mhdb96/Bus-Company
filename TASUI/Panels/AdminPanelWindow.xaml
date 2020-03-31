@@ -84,6 +84,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
+                                    x:Name="editTripBtn"
+                                    Click="editTripBtn_Click"
                                     Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                                     ToolTip="Edit">
                                     <materialDesign:PackIcon
