@@ -16,6 +16,7 @@ namespace TASLibrary.DataAccess
 
         //string filePath = @"C:\Users\mhdb9\Documents\GitHub\Bus-Company\trips.txt";
         string filePath = @"C:\Users\Talha\source\repos\Bus-Company\trips.txt";
+        //string filePath = $"{System.AppDomain.CurrentDomain.BaseDirectory}info.txt");
 
         public CLinkedList<BusModel> GetBus_All()
         {

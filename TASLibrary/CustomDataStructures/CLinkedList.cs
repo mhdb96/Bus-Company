@@ -125,6 +125,10 @@ namespace TASLibrary.CustomDataStructures
                 _head = newNode;
             }
             _count++;
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newNode.Data));
+            }
         }
         public void Clear()
         {
@@ -157,6 +161,10 @@ namespace TASLibrary.CustomDataStructures
                 {
                     _head = _head.Next;
                     _head.Prev = null;
+                }                                
+                if (CollectionChanged != null)
+                {
+                    CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, tNode.Data,0));
                 }
                 tNode.DeleteNode();
                 _count--;
@@ -180,6 +188,10 @@ namespace TASLibrary.CustomDataStructures
                 {
                     _tail = _tail.Prev;
                     _tail.Next = null;
+                }                                
+                if (CollectionChanged != null)
+                {
+                    CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, tNode.Data, _count-1));
                 }
                 tNode.DeleteNode();
                 _count--;
@@ -201,6 +213,10 @@ namespace TASLibrary.CustomDataStructures
                 CNode<T> tempNode = InternalFind(index);
                 tempNode.Prev.Next = tempNode.Next;
                 tempNode.Next.Prev = tempNode.Prev;
+                if (CollectionChanged != null)
+                {
+                    CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, tempNode.Data, index));
+                }
                 tempNode.DeleteNode();
                 _count--;
             }            
@@ -226,6 +242,10 @@ namespace TASLibrary.CustomDataStructures
                 {
                     tempNode.Prev.Next = tempNode.Next;
                     tempNode.Next.Prev = tempNode.Prev;
+                    if (CollectionChanged != null)
+                    {
+                        CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, tempNode.Data, tempNode.Index));
+                    }
                     tempNode.DeleteNode();
                     _count--;
                 }
@@ -262,6 +282,7 @@ namespace TASLibrary.CustomDataStructures
         private CNode<T> InternalFind(T data)
         {
             CNode<T> tempNode = _head;
+            int index = 0;
             EqualityComparer<T> c = EqualityComparer<T>.Default;
             if (tempNode != null)
             {
@@ -269,11 +290,13 @@ namespace TASLibrary.CustomDataStructures
                 {
                     do
                     {
+                        tempNode.Index = index;
                         if (c.Equals(tempNode.Data, data))
                         {
                             return tempNode;
                         }
                         tempNode = tempNode.Next;
+                        index++;
                     } while (tempNode != null);
                 }
             }

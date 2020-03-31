@@ -27,12 +27,12 @@ namespace TASLibrary.DataAccess
 
         public CLinkedList<TripModel> GetTrip_All()
         {
-            throw new NotImplementedException();
+            return TripModel.GetSampleData();
         }
 
         public void Trip_InsertAll(CLinkedList<TripModel> trips)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

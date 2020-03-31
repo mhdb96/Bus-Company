@@ -33,17 +33,14 @@ namespace TASUI.Panels
             //CallingWindow = caller;
             Trips = TripModel.GetSampleData();
             //test();
-            dgUsers.ItemsSource = Trips;
+            tripsDataGrid.ItemsSource = Trips;
         }
 
         private void WireUpLists()
         {
-            //dgUsers.ItemsSource = null;
-            //dgUsers.Items.Clear();
-            //dgUsers.ItemsSource = TripList;
-            //dgUsers.ItemsSource = null;
-            //dgUsers.Items.Clear();
-           // dgUsers.ItemsSource = Trips;
+            tripsDataGrid.ItemsSource = null;
+            tripsDataGrid.Items.Clear();
+            tripsDataGrid.ItemsSource = Trips;
         }
 
         private void test()
@@ -89,6 +86,16 @@ namespace TASUI.Panels
         {
             Trips.AddLast(model);
             WireUpLists();
+        }
+
+        private void deleteTripBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TripModel model = (TripModel)tripsDataGrid.SelectedItem;
+            Trips.Remove(model);
+        }
+        private void SaveList()
+        {
+
         }
     }
 }

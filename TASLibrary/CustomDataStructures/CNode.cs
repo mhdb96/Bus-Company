@@ -13,6 +13,7 @@ namespace TASLibrary.CustomDataStructures
         public T Data;
         public CNode<T> Next;
         public CNode<T> Prev;
+        public int Index { get; set; }
         public CNode(T data)
         {
             Data = data;
@@ -25,6 +26,7 @@ namespace TASLibrary.CustomDataStructures
             Data = default(T);
             Next = null;
             Prev = null;
+            Index = 0;
         }
         public void DeleteNode()
         {

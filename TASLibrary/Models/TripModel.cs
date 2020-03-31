@@ -46,8 +46,19 @@ namespace TASLibrary.Models
             test.Driver.Name = "Ahmet";
             test.Date = DateTime.Now;
             test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+
+            TripModel best = new TripModel();
+            best.No = 22;
+            best.Destination.Name = "Locaeli";
+            best.Bus.Capacity = 17;
+            best.Bus.Plate = "ASD1234";
+            best.Driver.Name = "Ahmet";
+            best.Date = DateTime.Now;
+            best.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+
             trips.AddLast(model);
             trips.AddLast(test);
+            trips.AddLast(best);
             return trips;
         }
 

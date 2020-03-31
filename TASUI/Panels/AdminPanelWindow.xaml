@@ -42,7 +42,7 @@
 
             <DataGrid
                 Margin="0 8 0 0"
-                Name="dgUsers"
+                Name="tripsDataGrid"
                 CanUserSortColumns="True"
                 CanUserAddRows="False"
                 AutoGenerateColumns="False"
@@ -99,6 +99,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
+                                    x:Name="deleteTripBtn"
+                                    Click="deleteTripBtn_Click"
                                     Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                                     ToolTip="Delete">
                                     <materialDesign:PackIcon
