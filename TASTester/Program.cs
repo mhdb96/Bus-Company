@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using TASLibrary;
 
 namespace TASTester
 {
@@ -19,6 +20,7 @@ namespace TASTester
         //static string filepath = @"C:\Users\Talha\source\repos\Bus-Company\trips.txt";
         static void Main(string[] args)
         {
+            GlobalConfig.InitializeConnections();
             //ListTesting();
             XmlTesting();
 
@@ -116,9 +118,12 @@ namespace TASTester
             //Create(trips);
             // trips = load();
 
-            IFormatter formatter = new BinaryFormatter();
-            SerializeItem(filepath, formatter, trips); // Serialize an instance of the class.
-            DeserializeItem(filepath, formatter); // Deserialize the instance.
+            //IFormatter formatter = new BinaryFormatter();
+            //SerializeItem(filepath, formatter, trips); // Serialize an instance of the class.
+            //DeserializeItem(filepath, formatter); // Deserialize the instance.
+            //GlobalConfig.Connection.Trip_InsertAll(trips);
+            CLinkedList<TripModel> mytrips =  GlobalConfig.Connection.GetTrip_All(trips.First.Date);
+            
             Console.WriteLine("Done");
             Console.ReadLine();
 

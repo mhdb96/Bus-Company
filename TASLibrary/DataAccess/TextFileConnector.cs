@@ -12,12 +12,15 @@ using TASLibrary.Models;
 namespace TASLibrary.DataAccess
 {
     public class TextFileConnector : IDataConnection
-    {
+    {        
+        string folderName = "TripsDB\\";
+        string filesDirectory = "";
 
-        //string filePath = @"C:\Users\mhdb9\Documents\GitHub\Bus-Company\trips.txt";
-        string filePath = @"C:\Users\Talha\source\repos\Bus-Company\trips.txt";
-        //string filePath = $"{System.AppDomain.CurrentDomain.BaseDirectory}info.txt");
-
+        public TextFileConnector()
+        {
+            filesDirectory = AppDomain.CurrentDomain.BaseDirectory + folderName;
+            Directory.CreateDirectory(filesDirectory);
+        }
         public CLinkedList<BusModel> GetBus_All()
         {
             return BusModel.GetSampleData();
@@ -33,13 +36,21 @@ namespace TASLibrary.DataAccess
             return DriverModel.GetSampleData();
         }
 
-        public CLinkedList<TripModel> GetTrip_All()
+        public CLinkedList<TripModel> GetTrip_All(DateTime date)
         {
-            CLinkedList<TripModel> t; 
-            using (Stream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            CLinkedList<TripModel> t;
+            string filePath = FilePathFinder(date);
+            try
             {
-                IFormatter formatter = new BinaryFormatter();
-                t = (CLinkedList<TripModel>)formatter.Deserialize(fs);
+                using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    t = (CLinkedList<TripModel>)formatter.Deserialize(fs);
+                }
+            }
+            catch (Exception e)
+            {
+                t = new CLinkedList<TripModel>();                
             }
 
             return t;
@@ -47,11 +58,19 @@ namespace TASLibrary.DataAccess
 
         public void Trip_InsertAll(CLinkedList<TripModel> trips)
         {
-            using (FileStream fs = File.OpenRead(filePath))
+            string filePath = FilePathFinder(trips.First.Date);
+            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
             {
                 IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fs, trips);
+                formatter.Serialize(fs, trips);               
             }
         }
+        public string FilePathFinder(DateTime date)
+        {
+            string dateToPath = date.ToShortDateString();
+            dateToPath = dateToPath.Replace('/', '-');
+            string filePath = $"{filesDirectory}Trips List for {dateToPath}.txt";            
+            return filePath;
+        }        
     }
 }

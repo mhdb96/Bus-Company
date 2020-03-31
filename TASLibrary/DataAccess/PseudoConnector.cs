@@ -8,7 +8,7 @@ using TASLibrary.Models;
 
 namespace TASLibrary.DataAccess
 {
-    public class PseudoConnector : IDataConnection
+    public class PseudoConnector //: IDataConnection
     {
         public CLinkedList<BusModel> GetBus_All()
         {
@@ -25,7 +25,7 @@ namespace TASLibrary.DataAccess
             return DriverModel.GetSampleData();
         }
 
-        public CLinkedList<TripModel> GetTrip_All()
+        public CLinkedList<TripModel> GetTrip_All(DateTime date)
         {
             return TripModel.GetSampleData();
         }
