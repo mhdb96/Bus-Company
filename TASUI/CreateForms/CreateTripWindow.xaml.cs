@@ -28,6 +28,8 @@ namespace TASUI.CreateForms
         CLinkedList<DestinationModel> Destinations;
         CLinkedList<BusModel> Buses;
         CLinkedList<DriverModel> Drivers;
+        TripModel editTripData;
+        bool isUpdate = false;
 
         public CreateTripWindow(ICreateTripRequester caller)
         {
@@ -35,6 +37,28 @@ namespace TASUI.CreateForms
             CallingWindow = caller;
 
             LoadListsData();
+        }
+        public CreateTripWindow(ICreateTripRequester caller, TripModel model)
+        {
+            InitializeComponent();
+            CallingWindow = caller;
+            editTripData = model;
+            LoadListsData();
+
+            // fill all the fields for update
+            this.Title = $"Update {editTripData.No.ToString()} Trip";
+
+            tripCodeTextBox.Text = editTripData.No.ToString();
+            destinationsCombobox.SelectedItem = editTripData.Destination;
+            busesCombobox.SelectedItem = editTripData.Bus;
+            seatPriceTextBox.Text = editTripData.SeatPrice.ToString();
+            driversCombobox.SelectedItem = editTripData.Driver;
+            tripDate.SelectedDate = editTripData.Date;
+            tripTime.SelectedTime = editTripData.Date;
+
+            AddNewTripButtonTextBlock.Text = "Update Trip";
+
+            isUpdate = true;
         }
 
         private void LoadListsData()
@@ -65,9 +89,14 @@ namespace TASUI.CreateForms
             DateTime t = (DateTime)tripTime.SelectedTime;
             model.Date = new DateTime(d.Year, d.Month, d.Day, t.Hour, t.Minute, t.Second);
 
-            CallingWindow.TripCreated(model);
+            CallingWindow.TripCreated(model); 
+
             this.Close();
-            //GlobalConfig.Connection.Trip_InsertAll(model);
+        }
+
+        public void editTrip(TripModel model)
+        {
+            MessageBox.Show(model.No.ToString());
         }
     }
 }

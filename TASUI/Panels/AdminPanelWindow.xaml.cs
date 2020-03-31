@@ -84,8 +84,18 @@ namespace TASUI.Panels
 
         public void TripCreated(TripModel model)
         {
+            Trips.Remove(model);
             Trips.AddLast(model);
             WireUpLists();
+        }
+
+        private void editTripBtn_Click(object sender, RoutedEventArgs e)
+        {
+            TripModel model = (TripModel)tripsDataGrid.SelectedItem;
+
+            CreateTripWindow createTrip = new CreateTripWindow(this, model);
+            this.Hide();
+            createTrip.ShowDialog();
         }
 
         private void deleteTripBtn_Click(object sender, RoutedEventArgs e)
@@ -93,9 +103,12 @@ namespace TASUI.Panels
             TripModel model = (TripModel)tripsDataGrid.SelectedItem;
             Trips.Remove(model);
         }
+
         private void SaveList()
         {
 
         }
+
+
     }
 }
