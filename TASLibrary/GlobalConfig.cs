@@ -8,7 +8,7 @@ namespace TASLibrary
 {
     public static class GlobalConfig
     {
-        public static IDataConnection Connection { get; private set; }
+        public static TextFileConnector Connection { get; private set; }
         public static void InitializeConnections()
         {
             Connection = new TextFileConnector();

@@ -15,5 +15,7 @@ namespace TASLibrary.DataAccess
         CLinkedList<DriverModel> GetDriver_All();
         CLinkedList<TripModel> GetTrip_All(DateTime date);
         void Trip_InsertAll(CLinkedList<TripModel> trips);
+        int GetTripId();
+        void UpdateTripId(int id);
     }
 }

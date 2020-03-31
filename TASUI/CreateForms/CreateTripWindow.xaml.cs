@@ -30,13 +30,16 @@ namespace TASUI.CreateForms
         CLinkedList<DriverModel> Drivers;
         TripModel editTripData;
         bool isUpdate = false;
+        int LastId;
 
-        public CreateTripWindow(ICreateTripRequester caller)
+        public CreateTripWindow(ICreateTripRequester caller, int id)
         {
             InitializeComponent();
             CallingWindow = caller;
-
+            
             LoadListsData();
+
+            tripCodeTextBox.Text = id.ToString();
         }
         public CreateTripWindow(ICreateTripRequester caller, TripModel model)
         {

@@ -71,6 +71,32 @@ namespace TASLibrary.DataAccess
             dateToPath = dateToPath.Replace('/', '-');
             string filePath = $"{filesDirectory}Trips List for {dateToPath}.txt";            
             return filePath;
-        }        
+        }   
+        
+        public int GetTripId()
+        {
+            int tripId;
+            try
+            {
+                string[] data = File.ReadAllLines($"{filesDirectory}dbinfo.txt", Encoding.GetEncoding("iso-8859-9"));
+                string[] info = data[0].Split(';');
+
+                tripId = Convert.ToInt32(info[1]);
+
+                return tripId;
+
+            }
+            catch (Exception)
+            {
+
+                UpdateTripId(1);
+                return 1;
+            }
+        }
+
+        public void UpdateTripId(int id)
+        {
+            File.WriteAllText($"{filesDirectory}dbinfo.txt", $"tripId;{id};");
+        }
     }
 }

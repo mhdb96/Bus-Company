@@ -16,6 +16,7 @@ using TASUI.CreateForms;
 using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
 using TASLibrary.Enums;
+using TASLibrary;
 
 namespace TASUI.Panels
 {
@@ -31,7 +32,8 @@ namespace TASUI.Panels
         {
             InitializeComponent();
             //CallingWindow = caller;
-            Trips = TripModel.GetSampleData();
+            //Trips = TripModel.GetSampleData();
+            Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
             //test();
             tripsDataGrid.ItemsSource = Trips;
         }
@@ -45,29 +47,31 @@ namespace TASUI.Panels
 
         private void test()
         {
-            TripModel model = new TripModel();
-            model.No = 22;
-            model.Destination.Name = "Kocaeli";
-            model.Bus.Capacity = 10;
-            model.Bus.Plate = "ASD1234";
-            model.Driver.Name = "Ahmet";
-            model.Date = DateTime.Now;
-            model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
-            TripModel test = new TripModel();
-            test.No = 22;
-            test.Destination.Name = "Locaeli";
-            test.Bus.Capacity = 17;
-            test.Bus.Plate = "ASD1234";
-            test.Driver.Name = "Ahmet";
-            test.Date = DateTime.Now;
-            test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
-            TripList.Add(model);
-            TripList.Add(test);
+            //TripModel model = new TripModel();
+            //model.No = 22;
+            //model.Destination.Name = "Kocaeli";
+            //model.Bus.Capacity = 10;
+            //model.Bus.Plate = "ASD1234";
+            //model.Driver.Name = "Ahmet";
+            //model.Date = DateTime.Now;
+            //model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+            //TripModel test = new TripModel();
+            //test.No = 22;
+            //test.Destination.Name = "Locaeli";
+            //test.Bus.Capacity = 17;
+            //test.Bus.Plate = "ASD1234";
+            //test.Driver.Name = "Ahmet";
+            //test.Date = DateTime.Now;
+            //test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+            //TripList.Add(model);
+            //TripList.Add(test);
         }
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateTripWindow createTrip = new CreateTripWindow(this);
+            int lastCreatedTripId = GlobalConfig.Connection.GetTripId() + 1;
+
+            CreateTripWindow createTrip = new CreateTripWindow(this, lastCreatedTripId);
             this.Hide();
             createTrip.ShowDialog();
         }
@@ -84,8 +88,9 @@ namespace TASUI.Panels
 
         public void TripCreated(TripModel model)
         {
-            Trips.Remove(model);
+            Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
+            GlobalConfig.Connection.UpdateTripId(model.No);
             WireUpLists();
         }
 
@@ -106,9 +111,12 @@ namespace TASUI.Panels
 
         private void SaveList()
         {
-
+            GlobalConfig.Connection.Trip_InsertAll(Trips);
         }
 
-
+        private void saveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveList();
+        }
     }
 }

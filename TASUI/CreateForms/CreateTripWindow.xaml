@@ -21,6 +21,7 @@
             <TextBox
                 x:Name="tripCodeTextBox"
                 materialDesign:HintAssist.Hint="Trip No"
+                IsEnabled="False"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 VerticalAlignment="Center"
                 Margin="0 0 0 10"  />
