@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Create New Trip" Height="480" Width="320"
+        Title="Create New Trip" Height="520" Width="320"
         Closed="Window_Closed">
     <Border Padding="15 35">
         <StackPanel>
@@ -50,7 +50,14 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            
+
+            <TextBox
+                x:Name="seatPriceTextBox"
+                materialDesign:HintAssist.Hint="Seat Price"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                VerticalAlignment="Center"
+                Margin="0 0 0 10"  />
+
             <ComboBox 
                 x:Name="driversCombobox"
                 materialDesign:HintAssist.Hint="Select A Driver"

@@ -58,6 +58,7 @@ namespace TASUI.CreateForms
             model.No = int.Parse(tripCodeTextBox.Text);
             model.Destination = (DestinationModel)destinationsCombobox.SelectedItem;
             model.Bus = (BusModel)busesCombobox.SelectedItem;
+            model.SeatPrice = int.Parse(seatPriceTextBox.Text);
             model.Driver = (DriverModel)driversCombobox.SelectedItem;
 
             DateTime d = (DateTime)tripDate.SelectedDate;
