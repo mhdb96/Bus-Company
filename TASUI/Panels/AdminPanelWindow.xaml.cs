@@ -40,6 +40,7 @@ namespace TASUI.Panels
             }
         }
 
+        bool isSold = false;
 
         public AdminPanelWindow(/*IAdminPanelRequester caller*/)
         {
@@ -123,9 +124,25 @@ namespace TASUI.Panels
         private void deleteTripBtn_Click(object sender, RoutedEventArgs e)
         {
             TripModel model = (TripModel)tripsDataGrid.SelectedItem;
-            Trips.Remove(model);
-            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 0);
-            IsChange = true;
+            foreach (var seat in model.Seats)
+            {
+                if (seat.Status == SeatStatus.Sold)
+                {
+                    isSold = true;
+                    break;
+                }
+                else
+                {
+                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 0);
+                    Trips.Remove(model);
+                    isChange = true;
+                }
+            }
+
+            if (isSold)
+            {
+                MessageBox.Show("You can't delete this trip because there is a seat already sold ");
+            }
         }
 
         private void SaveList()
@@ -156,6 +173,10 @@ namespace TASUI.Panels
             selectedDate = (DateTime)tripDate.SelectedDate;
             WireUpLists();
 
+            if (tripDate.SelectedDate < DateTime.Now.Date)
+            {
+                AddNewTripButton.IsEnabled = false;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

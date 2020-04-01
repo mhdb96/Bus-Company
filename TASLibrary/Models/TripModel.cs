@@ -26,6 +26,23 @@ namespace TASLibrary.Models
                 return Date.ToShortTimeString();
             }
         }
+        public decimal Revenue { 
+            get 
+            {
+                decimal sum = 0;
+                foreach (var seat in Seats)
+                {
+                    if (seat.Status == SeatStatus.Sold)
+                    {
+                        sum += SeatPrice;
+                    }
+                }
+
+                return sum;
+            } 
+
+            set { }
+        }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
 
         public TripModel()
