@@ -70,6 +70,7 @@
     <Compile Include="CreateForms\CreateTripWindow.xaml.cs">
       <DependentUpon>CreateTripWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\Answer.cs" />
     <Compile Include="Requesters\IAdminPanelRequester.cs" />
     <Compile Include="Requesters\ICreateTripRequester.cs" />
     <Compile Include="Requesters\IUserPanelRequester.cs" />

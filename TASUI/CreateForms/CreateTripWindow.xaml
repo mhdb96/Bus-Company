@@ -76,6 +76,7 @@
                 x:Name="tripDate"
                 materialDesign:HintAssist.Hint="Pick Date"
                 Margin="0 0 0 10"
+                IsEnabled="False"
                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
             
             <materialDesign:TimePicker

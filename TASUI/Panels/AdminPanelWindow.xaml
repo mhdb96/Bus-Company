@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TASUI.CreateForms"
+        xmlns:local="clr-namespace:TASUI.Panels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -14,7 +14,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="CreateTripWindow" Height="600" Width="1200"
-        Closed="Window_Closed">
+        Closed="Window_Closed"
+        Closing="Window_Closing">
 
     <Border Padding="50 30">
         <Grid Margin="0 0 0 20">
@@ -38,6 +39,16 @@
                     FontWeight="Bold"
                     Text="Trips"
                     Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
+            
+                <DatePicker
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    x:Name="tripDate"
+                    materialDesign:HintAssist.Hint="Pick Date"
+                    Width="250"
+                    HorizontalAlignment="Left"
+                    SelectedDateChanged="tripDate_SelectedDateChanged"
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
                 <Button
                     Grid.Column="2"
@@ -48,15 +59,18 @@
                     Content="Add New Trip" />
 
                 <DataGrid
-                    Margin="0 8 0 0"
+                    Margin="0 40 0 0"
                     Grid.Column="0"
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
+                    Grid.RowSpan="2"
                     Name="tripsDataGrid"
                     CanUserSortColumns="True"
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
                     IsReadOnly="True"
+                    SelectionMode="Single"
+                    Height="auto"
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
@@ -125,16 +139,17 @@
                         </DataGridTemplateColumn>
 
                     </DataGrid.Columns>
+                    
                 </DataGrid>
 
-                <Button
+            <Button
                     Grid.Column="3"
                     Grid.Row="3"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     x:Name="saveChangesButton" 
                     Click="saveChangesButton_Click"
                     Content="Save Changes" />
-            </Grid>  
+        </Grid>  
     </Border>
     
 </Window>

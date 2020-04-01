@@ -17,6 +17,7 @@ using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
 using TASLibrary.Enums;
 using TASLibrary;
+using TASUI.Enums;
 
 namespace TASUI.Panels
 {
@@ -28,11 +29,17 @@ namespace TASUI.Panels
         public IAdminPanelRequester CallingWindow;
         CLinkedList<TripModel> Trips;
         List<TripModel> TripList = new List<TripModel>();
+        DateTime selectedDate;
+        bool isChange = false;
+        
+
         public AdminPanelWindow(/*IAdminPanelRequester caller*/)
         {
             InitializeComponent();
             //CallingWindow = caller;
             //Trips = TripModel.GetSampleData();
+            selectedDate = DateTime.Now;
+            tripDate.SelectedDate = selectedDate;
             Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
             //test();
             tripsDataGrid.ItemsSource = Trips;
@@ -71,7 +78,7 @@ namespace TASUI.Panels
         {
             int lastCreatedTripId = GlobalConfig.Connection.GetTripId() + 1;
 
-            CreateTripWindow createTrip = new CreateTripWindow(this, lastCreatedTripId);
+            CreateTripWindow createTrip = new CreateTripWindow(this, lastCreatedTripId, selectedDate);
             this.Hide();
             createTrip.ShowDialog();
         }
@@ -91,6 +98,7 @@ namespace TASUI.Panels
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
             GlobalConfig.Connection.UpdateTripId(model.No);
+            isChange = true;
             WireUpLists();
         }
 
@@ -107,14 +115,41 @@ namespace TASUI.Panels
         {
             TripModel model = (TripModel)tripsDataGrid.SelectedItem;
             Trips.Remove(model);
+            isChange = true;
         }
 
         private void SaveList()
-        {
-            GlobalConfig.Connection.Trip_InsertAll(Trips);
+        { 
+            if (isChange)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save your changes?", "warning", MessageBoxButton.YesNo); // TODO daha sonra material dialog eklenecek.
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    GlobalConfig.Connection.Trip_InsertAll(Trips);
+                    isChange = false;
+                }
+            }
         }
 
         private void saveChangesButton_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalConfig.Connection.Trip_InsertAll(Trips);
+            MessageBox.Show("Değişiklikler başarılı bir şekilde kayıt edildi.");
+            isChange = false;
+        }
+
+        private void tripDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SaveList();
+
+            Trips = GlobalConfig.Connection.GetTrip_All((DateTime)tripDate.SelectedDate);
+            selectedDate = (DateTime)tripDate.SelectedDate;
+            WireUpLists();
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveList();
         }

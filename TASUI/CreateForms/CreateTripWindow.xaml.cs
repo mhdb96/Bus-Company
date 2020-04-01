@@ -29,15 +29,15 @@ namespace TASUI.CreateForms
         CLinkedList<BusModel> Buses;
         CLinkedList<DriverModel> Drivers;
         TripModel editTripData;
-        bool isUpdate = false;
-        int LastId;
 
-        public CreateTripWindow(ICreateTripRequester caller, int id)
+        public CreateTripWindow(ICreateTripRequester caller, int id, DateTime selectedDate)
         {
             InitializeComponent();
             CallingWindow = caller;
             
             LoadListsData();
+
+            tripDate.SelectedDate = selectedDate;
 
             tripCodeTextBox.Text = id.ToString();
         }
@@ -60,8 +60,6 @@ namespace TASUI.CreateForms
             tripTime.SelectedTime = editTripData.Date;
 
             AddNewTripButtonTextBlock.Text = "Update Trip";
-
-            isUpdate = true;
         }
 
         private void LoadListsData()
