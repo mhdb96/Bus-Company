@@ -46,6 +46,7 @@
     <Compile Include="DataAccess\IDataConnection.cs" />
     <Compile Include="DataAccess\PseudoConnector.cs" />
     <Compile Include="DataAccess\TextFileConnector.cs" />
+    <Compile Include="Enums\DbInfo.cs" />
     <Compile Include="Enums\SeatStatus.cs" />
     <Compile Include="Enums\SexType.cs" />
     <Compile Include="GlobalConfig.cs" />

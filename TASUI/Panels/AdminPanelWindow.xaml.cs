@@ -17,7 +17,6 @@ using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
 using TASLibrary.Enums;
 using TASLibrary;
-using TASUI.Enums;
 
 namespace TASUI.Panels
 {
@@ -31,7 +30,16 @@ namespace TASUI.Panels
         List<TripModel> TripList = new List<TripModel>();
         DateTime selectedDate;
         bool isChange = false;
-        
+        bool IsChange
+        {
+            get { return isChange; }
+            set
+            {
+                isChange = value;
+                saveChangesButton.IsEnabled = value;
+            }
+        }
+
 
         public AdminPanelWindow(/*IAdminPanelRequester caller*/)
         {
@@ -42,6 +50,7 @@ namespace TASUI.Panels
             tripDate.SelectedDate = selectedDate;
             Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
             //test();
+            IsChange = false;
             tripsDataGrid.ItemsSource = Trips;
         }
 
@@ -76,7 +85,7 @@ namespace TASUI.Panels
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
-            int lastCreatedTripId = GlobalConfig.Connection.GetTripId() + 1;
+            int lastCreatedTripId = GlobalConfig.Connection.GetDbInfo(DbInfo.TripId) + 1;
 
             CreateTripWindow createTrip = new CreateTripWindow(this, lastCreatedTripId, selectedDate);
             this.Hide();
@@ -97,8 +106,8 @@ namespace TASUI.Panels
         {
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
-            GlobalConfig.Connection.UpdateTripId(model.No);
-            isChange = true;
+            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, model.No);
+            IsChange = true;
             WireUpLists();
         }
 
@@ -115,34 +124,34 @@ namespace TASUI.Panels
         {
             TripModel model = (TripModel)tripsDataGrid.SelectedItem;
             Trips.Remove(model);
-            isChange = true;
+            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 0);
+            IsChange = true;
         }
 
         private void SaveList()
         { 
-            if (isChange)
+            if (IsChange)
             {
                 MessageBoxResult result = MessageBox.Show("Do you want to save your changes?", "warning", MessageBoxButton.YesNo); // TODO daha sonra material dialog eklenecek.
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    GlobalConfig.Connection.Trip_InsertAll(Trips);
-                    isChange = false;
+                    GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
+                    IsChange = false;
                 }
             }
         }
 
         private void saveChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            GlobalConfig.Connection.Trip_InsertAll(Trips);
+            GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
             MessageBox.Show("Değişiklikler başarılı bir şekilde kayıt edildi.");
-            isChange = false;
+            IsChange = false;
         }
 
         private void tripDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             SaveList();
-
             Trips = GlobalConfig.Connection.GetTrip_All((DateTime)tripDate.SelectedDate);
             selectedDate = (DateTime)tripDate.SelectedDate;
             WireUpLists();

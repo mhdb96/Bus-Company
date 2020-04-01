@@ -22,8 +22,13 @@ namespace TASTester
         {
             GlobalConfig.InitializeConnections();
             //ListTesting();
-            XmlTesting();
-
+            //XmlTesting();
+            //GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 1);
+            //GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, 29);
+            //Console.WriteLine(GlobalConfig.Connection.GetDbInfo(DbInfo.TripCount));
+            //Console.WriteLine(GlobalConfig.Connection.GetDbInfo(DbInfo.TripId));
+            CLinkedList<TripModel> tri = TripModel.GetSampleData();
+            Console.WriteLine(tri.ToString("Trips"));
             Console.ReadLine();
         }
 

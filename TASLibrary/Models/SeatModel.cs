@@ -88,5 +88,12 @@ namespace TASLibrary.Models
             Passenger = (PassengerModel)info.GetValue("Passenger", typeof(PassengerModel));
             Status = (SeatStatus)info.GetValue("Status", typeof(SeatStatus));
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Seat's Information => No: {No}, Status: {Status}");            
+            sb.AppendLine(Passenger.ToString());            
+            return sb.ToString();
+        }
     }
 }

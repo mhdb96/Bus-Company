@@ -84,5 +84,9 @@ namespace TASLibrary.Models
         {
             return !(lhs == rhs);
         }
+        public override string ToString()
+        {            
+            return $"Destination's Information => Name: {Name}";
+        }
     }
 }

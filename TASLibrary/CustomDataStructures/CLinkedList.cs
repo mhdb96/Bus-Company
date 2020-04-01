@@ -467,5 +467,43 @@ namespace TASLibrary.CustomDataStructures
                 } while (currentNode != null);
             }
         }
+        public override string ToString()
+        {            
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("");
+            sb.AppendLine($"{typeof(T).Name} List's Information:");
+            sb.AppendLine("-----------------------");
+            CNode<T> currentNode = _head;
+            int i = 1;
+            if (currentNode != null)
+            {
+                do
+                {
+                    sb.Append($"{i}th {currentNode.Data}");
+                    currentNode = currentNode.Next;
+                    i++;
+                } while (currentNode != null);
+            }            
+            return sb.ToString();
+        }
+        public string ToString(string listName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"{listName} List's Information:");
+            sb.AppendLine("-----------------------");
+            CNode<T> currentNode = _head;
+            int i = 1;
+            if (currentNode != null)
+            {
+                do
+                {
+                    sb.Append($"{i}th {currentNode.Data}");
+                    currentNode = currentNode.Next;
+                    i++;
+                } while (currentNode != null);
+            }
+            return sb.ToString();
+        }
+
     }
 }

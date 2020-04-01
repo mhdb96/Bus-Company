@@ -87,5 +87,9 @@ namespace TASLibrary.CustomDataStructures
         {
             Data = (T)info.GetValue("Data", typeof(T));
         }
+        public override string ToString()
+        {
+            return Data.ToString();
+        }
     }
 }

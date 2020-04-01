@@ -15,6 +15,8 @@ using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
 using TASUI.Requesters;
 using TASLibrary;
+using TASLibrary.DataAccess;
+using TASLibrary.Enums;
 
 namespace TASUI.CreateForms
 {
@@ -29,6 +31,7 @@ namespace TASUI.CreateForms
         CLinkedList<BusModel> Buses;
         CLinkedList<DriverModel> Drivers;
         TripModel editTripData;
+        bool isUpdate = false;
 
         public CreateTripWindow(ICreateTripRequester caller, int id, DateTime selectedDate)
         {
@@ -47,7 +50,7 @@ namespace TASUI.CreateForms
             CallingWindow = caller;
             editTripData = model;
             LoadListsData();
-
+            isUpdate = true;
             // fill all the fields for update
             this.Title = $"Update {editTripData.No.ToString()} Trip";
 
@@ -85,13 +88,16 @@ namespace TASUI.CreateForms
             model.Bus = (BusModel)busesCombobox.SelectedItem;
             model.SeatPrice = int.Parse(seatPriceTextBox.Text);
             model.Driver = (DriverModel)driversCombobox.SelectedItem;
-
             DateTime d = (DateTime)tripDate.SelectedDate;
             DateTime t = (DateTime)tripTime.SelectedTime;
             model.Date = new DateTime(d.Year, d.Month, d.Day, t.Hour, t.Minute, t.Second);
 
+            if(!isUpdate)
+            {
+                GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 1);
+            }
             CallingWindow.TripCreated(model); 
-
+            
             this.Close();
         }
 

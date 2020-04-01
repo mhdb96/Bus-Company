@@ -23,7 +23,6 @@ namespace TASLibrary.Models
             Name = name;
             Sex = sex;
         }
-
         public override bool Equals(object obj)
         {
             return this.Equals(obj as PassengerModel);
@@ -55,7 +54,6 @@ namespace TASLibrary.Models
 
         public static bool operator ==(PassengerModel lhs, PassengerModel rhs)
         {
-
             if (Object.ReferenceEquals(lhs, null))
             {
                 if (Object.ReferenceEquals(rhs, null))
@@ -79,6 +77,12 @@ namespace TASLibrary.Models
         {
             Name = (string)info.GetValue("Name", typeof(string));
             Sex = (SexType)info.GetValue("Sex", typeof(SexType));
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Passenger's Information => Name: {Name}, Sex: {Sex}");                        
+            return sb.ToString();
         }
     }
 }

@@ -20,6 +20,12 @@ namespace TASLibrary.Models
         public BusModel Bus { get; set; } = new BusModel();
         public DriverModel Driver { get; set; } = new DriverModel();
         public decimal SeatPrice { get; set; }
+        public string Time { 
+            get
+            {
+                return Date.ToShortTimeString();
+            }
+        }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
 
         public TripModel()
@@ -39,6 +45,9 @@ namespace TASLibrary.Models
             model.Date = DateTime.Now;
             model.SeatPrice = 50;
             model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("fdgdfgdf", SexType.Male), SeatStatus.Sold));
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("gfdgdfg", SexType.Male), SeatStatus.Sold));
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("yhutyuty", SexType.Male), SeatStatus.Sold));
             TripModel test = new TripModel();
             test.No = 22;
             test.Destination.Name = "Kocaeli - Izmir";
@@ -134,7 +143,7 @@ namespace TASLibrary.Models
             {
                 for (int i = 0; i < Bus.Capacity; i++)
                 {
-                    Seats.AddLast(new SeatModel(i, new PassengerModel(), SeatStatus.Empty));
+                    Seats.AddLast(new SeatModel(i+1, new PassengerModel(), SeatStatus.Empty));
                 }
                 info.AddValue("Seats", Seats);
             }            
@@ -150,6 +159,20 @@ namespace TASLibrary.Models
             Driver = (DriverModel)info.GetValue("Driver", typeof(DriverModel));
             SeatPrice = (decimal)info.GetValue("SeatPrice", typeof(decimal));
             Seats = (CLinkedList<SeatModel>)info.GetValue("Seats", typeof(CLinkedList<SeatModel>));
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Trip's Information:");
+            sb.AppendLine($"No: {No}");
+            sb.AppendLine($"Seat Price: { SeatPrice}");                       
+            sb.AppendLine(Destination.ToString());
+            sb.AppendLine(Bus.ToString());
+            sb.AppendLine(Driver.ToString());
+            sb.AppendLine("");
+            sb.Append(Seats.ToString("Seats"));            
+            sb.AppendLine("******************************************************************************");
+            return sb.ToString();
         }
     }
 }

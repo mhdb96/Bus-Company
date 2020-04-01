@@ -84,5 +84,9 @@ namespace TASLibrary.Models
         {
             Name = (string)info.GetValue("Name", typeof(string));            
         }
+        public override string ToString()
+        {                               
+            return $"Driver's Information => Name: {Name}";
+        }
     }
 }

@@ -8,18 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using TASLibrary.CustomDataStructures;
 using TASLibrary.Models;
+using TASLibrary.Enums;
 
 namespace TASLibrary.DataAccess
 {
-    public class TextFileConnector : IDataConnection
+    public class TextFileConnector //: IDataConnection
     {        
-        string folderName = "TripsDB\\";
-        string filesDirectory = "";
+        const string dbFolderName = @"TripsDB\\DbFiles\\";
+        const string textFolderName = @"TripsDB\\";
+        string dbFilesDirectory = "";
+        string textFilesDirectory = "";
+        string dbInfoPath = "";
 
         public TextFileConnector()
         {
-            filesDirectory = AppDomain.CurrentDomain.BaseDirectory + folderName;
-            Directory.CreateDirectory(filesDirectory);
+            dbFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + dbFolderName;
+            textFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + textFolderName;
+            Directory.CreateDirectory(dbFilesDirectory);
+            Directory.CreateDirectory(textFilesDirectory);
+            dbInfoPath = $"{dbFilesDirectory}dbinfo.info";
         }
         public CLinkedList<BusModel> GetBus_All()
         {
@@ -56,47 +63,96 @@ namespace TASLibrary.DataAccess
             return t;
         }
 
-        public void Trip_InsertAll(CLinkedList<TripModel> trips)
+        public void Trip_InsertAll(CLinkedList<TripModel> trips, DateTime selectedDate)
         {
-            string filePath = FilePathFinder(trips.First.Date);
+            string filePath = FilePathFinder(selectedDate);
             using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
             {
                 IFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(fs, trips);               
             }
+            filePath = TextFilePathFinder(selectedDate);
+            File.WriteAllText(filePath, trips.ToString("Trips"), Encoding.GetEncoding("iso-8859-9"));
         }
         public string FilePathFinder(DateTime date)
         {
             string dateToPath = date.ToShortDateString();
-            dateToPath = dateToPath.Replace('/', '-');
-            string filePath = $"{filesDirectory}Trips List for {dateToPath}.txt";            
+            dateToPath = dateToPath.Replace('/', '.');
+            string filePath = $"{dbFilesDirectory}{dateToPath}.dat";            
             return filePath;
-        }   
-        
-        public int GetTripId()
+        }
+        public string TextFilePathFinder(DateTime date)
         {
-            int tripId;
-            try
-            {
-                string[] data = File.ReadAllLines($"{filesDirectory}dbinfo.txt", Encoding.GetEncoding("iso-8859-9"));
-                string[] info = data[0].Split(';');
-
-                tripId = Convert.ToInt32(info[1]);
-
-                return tripId;
-
-            }
-            catch (Exception)
-            {
-
-                UpdateTripId(1);
-                return 1;
-            }
+            string dateToPath = date.ToShortDateString();
+            dateToPath = dateToPath.Replace('/', '.');
+            string filePath = $"{textFilesDirectory}{dateToPath}.txt";
+            return filePath;
         }
 
-        public void UpdateTripId(int id)
+        public void UpdateDbInfo(DbInfo info, int number)
         {
-            File.WriteAllText($"{filesDirectory}dbinfo.txt", $"tripId;{id};");
+            CheckDbInfo();
+            string[] data = File.ReadAllLines(dbInfoPath, Encoding.GetEncoding("iso-8859-9"));                       
+            switch (info)
+            {
+                case DbInfo.TripId:
+                    {
+                        data[0] = $"Trip Id;{number};";
+                        break;
+                    }                    
+                case DbInfo.TripCount:
+                    {
+                        string[] line = data[1].Split(';');
+                        int tripCount = Convert.ToInt32(line[1]);
+                        if(number == 1)
+                        {
+                            tripCount++;
+                        }
+                        else if(number == 0)
+                        {
+                            if(tripCount != 0)
+                            {
+                                tripCount--;
+                            }                            
+                        }
+                        data[1] = $"Trip Count;{tripCount};";
+                        break;
+                    }                                    
+            }
+            File.WriteAllLines(dbInfoPath, data, Encoding.GetEncoding("iso-8859-9"));
+        }
+        public int GetDbInfo(DbInfo info)
+        {
+            CheckDbInfo();
+            string[] data = File.ReadAllLines(dbInfoPath, Encoding.GetEncoding("iso-8859-9"));
+            switch (info)
+            {
+                case DbInfo.TripId:
+                    {
+                        string[] line = data[0].Split(';');
+                        int tripId = Convert.ToInt32(line[1]);
+                        return tripId;                        
+                    }
+
+                case DbInfo.TripCount:
+                    {
+                        string[] line = data[1].Split(';');
+                        int tripCount = Convert.ToInt32(line[1]);
+                        return tripCount;
+                    }
+            }
+            return -1;
+        }
+        private void CheckDbInfo()
+        {
+            if(!File.Exists(dbInfoPath))
+            {
+                string[] data = new string[2];
+                data[0] = "Trip Id;1;";
+                data[1] = "Trip Count;0;";
+                File.WriteAllLines(dbInfoPath, data, Encoding.GetEncoding("iso-8859-9"));
+                // TODO Log
+            }
         }
     }
 }

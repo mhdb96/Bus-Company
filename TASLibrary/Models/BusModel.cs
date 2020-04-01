@@ -102,5 +102,9 @@ namespace TASLibrary.Models
             Plate = (string)info.GetValue("Plate", typeof(string));
             Capacity = (int)info.GetValue("Capacity", typeof(int));
         }
+        public override string ToString()
+        {            
+            return $"Bus's Information => Plate: {Plate}, Capacity: {Capacity}";
+        }
     }
 }
