@@ -20,6 +20,23 @@ namespace TASLibrary.Models
         public BusModel Bus { get; set; } = new BusModel();
         public DriverModel Driver { get; set; } = new DriverModel();
         public decimal SeatPrice { get; set; }
+        public decimal Revenue { 
+            get 
+            {
+                decimal sum = 0;
+                foreach (var seat in Seats)
+                {
+                    if (seat.Status == SeatStatus.Sold)
+                    {
+                        sum += SeatPrice;
+                    }
+                }
+
+                return sum;
+            } 
+
+            set { }
+        }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
 
         public TripModel()
