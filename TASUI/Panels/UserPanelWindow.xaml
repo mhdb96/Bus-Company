@@ -4,9 +4,112 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TASUI.Panels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="UserPanelWindow" Height="450" Width="800" Closed="Window_Closed">
-    <Grid>
-        
-    </Grid>
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="UserPanelWindow" Height="600" Width="1200" Closed="Window_Closed">
+    
+    <Border Padding="80 30">
+        <Grid Margin="0 0 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                Grid.Row="0"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="Trips"
+                Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
+
+            <DatePicker
+                Grid.Column="3"
+                Grid.Row="0"
+                x:Name="tripDate"
+                materialDesign:HintAssist.Hint="Pick Date"
+                SelectedDateChanged="tripDate_SelectedDateChanged"
+                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+            <DataGrid
+                Margin="0 40 0 0"
+                Grid.Column="0"
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="2"
+                Name="tripsDataGrid"
+                CanUserSortColumns="True"
+                CanUserAddRows="False"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                SelectionMode="Single"
+                Height="auto"
+                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn
+                        Binding="{Binding No}"
+                        Header="Trip Code" />
+
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Destination.Name}"
+                        Header="Destination" />
+
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Time}"
+                        Header="Departure Time" />
+
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Bus.Plate}"
+                        Header="Bus Plate" />
+                    
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Driver.Name}"
+                        Header="Bus Driver" />
+
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding Bus.Capacity}"
+                        Header="Bus Capacity" />
+
+                    <materialDesign:DataGridTextColumn
+                        Binding="{Binding SeatPrice}"
+                        Header="Seat Price" />
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    x:Name="selectTripBtn"
+                                    Click="selectTripBtn_Click"
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    Content="Select">
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+    </Border>
+
 </Window>
+

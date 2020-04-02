@@ -67,12 +67,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CreateForms\CreateSeatWindow.xaml.cs">
+      <DependentUpon>CreateSeatWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateForms\CreateTripWindow.xaml.cs">
       <DependentUpon>CreateTripWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ParentFinder.cs" />
     <Compile Include="Requesters\IAdminPanelRequester.cs" />
+    <Compile Include="Requesters\ICreateSeatRequester.cs" />
     <Compile Include="Requesters\ICreateTripRequester.cs" />
     <Compile Include="Requesters\IUserPanelRequester.cs" />
+    <Compile Include="UserControls\PassengerInfoUserControl.xaml.cs">
+      <DependentUpon>PassengerInfoUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SeatUserControl.xaml.cs">
+      <DependentUpon>SeatUserControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindow.xaml.cs">
@@ -117,6 +128,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CreateForms\CreateSeatWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateForms\CreateTripWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +145,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\UserPanelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PassengerInfoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SeatUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

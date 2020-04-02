@@ -29,7 +29,7 @@ namespace TASUI
 
         private void UserLoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            UserPanelWindow user = new UserPanelWindow(this);
+            UserPanelWindow user = new UserPanelWindow(/*this*/);
             this.Hide();
             user.ShowDialog();
         }
