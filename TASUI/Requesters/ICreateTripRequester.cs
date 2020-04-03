@@ -11,5 +11,6 @@ namespace TASUI.Requesters
     {
         void CreateTripFormClosed();
         void TripCreated(TripModel trip);
+        void TripUpdated(TripModel trip);
     }
 }

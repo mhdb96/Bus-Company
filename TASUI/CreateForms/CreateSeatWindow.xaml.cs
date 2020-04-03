@@ -56,7 +56,14 @@ namespace TASUI.CreateForms
             {
                 if (passenger.seatNumber.Text == seatNumber)
                 {
+                    // remove from ui
                     passengerStackPanel.Children.Remove(passenger);
+
+                    // reset seat info
+                    SeatModel seat = Trip.Seats.Find(S => S.No.ToString() == seatNumber);
+                    seat.Status = SeatStatus.Empty;
+                    seat.Passenger = new PassengerModel();
+
                     break;
                 }
             }
@@ -88,7 +95,15 @@ namespace TASUI.CreateForms
                 if (seat.Status == SeatStatus.Sold || seat.Status == SeatStatus.Reserved)
                 {
                     seatUser.seatStatus.IsChecked = true;
-                    seatUser.seatStatus.IsEnabled = false;
+
+                    PassengerInfoUserControl passenger = new PassengerInfoUserControl();
+
+                    passenger.seatNumber.Text = seat.No.ToString();
+                    passenger.passengerNameTextBox.Text = seat.Passenger.Name;
+                    passenger.passengerGenderComboBox.SelectedIndex = seat.Passenger.Sex == SexType.Male ? 0 : 1;
+                    passenger.seatStatusComboBox.SelectedIndex = seat.Status == SeatStatus.Sold ? 0 : 1;
+
+                    passengerStackPanel.Children.Add(passenger);
                 }
 
                 seatUser.Margin = new Thickness(10);
@@ -142,7 +157,7 @@ namespace TASUI.CreateForms
                     }
                 }
             }
-
+                        
             CallingWindow.SeatCreated(Trip);
             this.Close();
         }

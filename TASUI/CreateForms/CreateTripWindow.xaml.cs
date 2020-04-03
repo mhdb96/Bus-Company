@@ -47,10 +47,15 @@ namespace TASUI.CreateForms
         public CreateTripWindow(ICreateTripRequester caller, TripModel model)
         {
             InitializeComponent();
+
             CallingWindow = caller;
+
             editTripData = model;
+
             LoadListsData();
+
             isUpdate = true;
+
             // fill all the fields for update
             this.Title = $"Update {editTripData.No.ToString()} Trip";
 
@@ -63,6 +68,17 @@ namespace TASUI.CreateForms
             tripTime.SelectedTime = editTripData.Date;
 
             AddNewTripButtonTextBlock.Text = "Update Trip";
+
+            // if there is a sold seat you can't change the bus
+            foreach (SeatModel seat in model.Seats)
+            {
+                if (seat.Status == SeatStatus.Reserved || seat.Status == SeatStatus.Reserved)
+                {
+                    busesCombobox.IsEnabled = false;
+
+                    break;
+                }
+            }
         }
 
         private void LoadListsData()
@@ -83,6 +99,12 @@ namespace TASUI.CreateForms
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
             TripModel model = new TripModel();
+
+            if (isUpdate)
+            {
+                model = editTripData;
+            }
+            
             model.No = int.Parse(tripCodeTextBox.Text);
             model.Destination = (DestinationModel)destinationsCombobox.SelectedItem;
             model.Bus = (BusModel)busesCombobox.SelectedItem;
@@ -94,16 +116,17 @@ namespace TASUI.CreateForms
 
             if(!isUpdate)
             {
-                GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 1);
+                model.CreateSeats();
+
+                CallingWindow.TripCreated(model);
             }
-            CallingWindow.TripCreated(model); 
+            else
+            {
+                CallingWindow.TripUpdated(model);
+            }         
+            
             
             this.Close();
-        }
-
-        public void editTrip(TripModel model)
-        {
-            MessageBox.Show(model.No.ToString());
         }
     }
 }

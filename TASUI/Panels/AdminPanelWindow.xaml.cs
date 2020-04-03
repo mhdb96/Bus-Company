@@ -23,13 +23,16 @@ namespace TASUI.Panels
     /// <summary>
     /// Interaction logic for AdminPanelWindow.xaml
     /// </summary>
-    public partial class AdminPanelWindow : Window, ICreateTripRequester
+    public partial class AdminPanelWindow : Window, ICreateTripRequester, ICreateSeatRequester
     {
         public IAdminPanelRequester CallingWindow;
         CLinkedList<TripModel> Trips;
         List<TripModel> TripList = new List<TripModel>();
         DateTime selectedDate;
         bool isChange = false;
+        int TripCount = GlobalConfig.Connection.GetDbInfo(DbInfo.TripCount);
+        int TripId = GlobalConfig.Connection.GetDbInfo(DbInfo.TripId);
+
         bool IsChange
         {
             get { return isChange; }
@@ -50,9 +53,11 @@ namespace TASUI.Panels
             selectedDate = DateTime.Now;
             tripDate.SelectedDate = selectedDate;
             Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
-            //test();
+
             IsChange = false;
             tripsDataGrid.ItemsSource = Trips;
+
+            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
         }
 
         private void WireUpLists()
@@ -60,28 +65,6 @@ namespace TASUI.Panels
             tripsDataGrid.ItemsSource = null;
             tripsDataGrid.Items.Clear();
             tripsDataGrid.ItemsSource = Trips;
-        }
-
-        private void test()
-        {
-            //TripModel model = new TripModel();
-            //model.No = 22;
-            //model.Destination.Name = "Kocaeli";
-            //model.Bus.Capacity = 10;
-            //model.Bus.Plate = "ASD1234";
-            //model.Driver.Name = "Ahmet";
-            //model.Date = DateTime.Now;
-            //model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
-            //TripModel test = new TripModel();
-            //test.No = 22;
-            //test.Destination.Name = "Locaeli";
-            //test.Bus.Capacity = 17;
-            //test.Bus.Plate = "ASD1234";
-            //test.Driver.Name = "Ahmet";
-            //test.Date = DateTime.Now;
-            //test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
-            //TripList.Add(model);
-            //TripList.Add(test);
         }
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
@@ -105,9 +88,13 @@ namespace TASUI.Panels
 
         public void TripCreated(TripModel model)
         {
+            TripCount++;
+
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
-            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, model.No);
+
+            TripId = model.No;
+
             IsChange = true;
             WireUpLists();
         }
@@ -124,6 +111,7 @@ namespace TASUI.Panels
         private void deleteTripBtn_Click(object sender, RoutedEventArgs e)
         {
             TripModel model = (TripModel)tripsDataGrid.SelectedItem;
+
             foreach (var seat in model.Seats)
             {
                 if (seat.Status == SeatStatus.Sold)
@@ -131,17 +119,20 @@ namespace TASUI.Panels
                     isSold = true;
                     break;
                 }
-                else
-                {
-                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, 0);
-                    Trips.Remove(model);
-                    isChange = true;
-                }
             }
 
             if (isSold)
             {
                 MessageBox.Show("You can't delete this trip because there is a seat already sold ");
+                isSold = false;
+            }
+            else
+            {
+                Trips.Remove(model);
+
+                TripCount--;
+
+                IsChange = true;
             }
         }
 
@@ -154,16 +145,31 @@ namespace TASUI.Panels
                 if (result == MessageBoxResult.Yes)
                 {
                     GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
-                    IsChange = false;
+
+                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, TripId);
+
+                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
+
+                    tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
                 }
+
+                IsChange = false;
             }
         }
 
         private void saveChangesButton_Click(object sender, RoutedEventArgs e)
         {
             GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
-            MessageBox.Show("Değişiklikler başarılı bir şekilde kayıt edildi.");
-            IsChange = false;
+
+            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, TripId);
+
+            GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
+
+            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
+
+            MessageBox.Show("Changes are successfully updated.");
+
+            IsChange = false;            
         }
 
         private void tripDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -177,11 +183,48 @@ namespace TASUI.Panels
             {
                 AddNewTripButton.IsEnabled = false;
             }
+            else
+            {
+                AddNewTripButton.IsEnabled = true;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveList();
+        }
+
+        private void manageSeatsButton_Click(object sender, RoutedEventArgs e)
+        {
+            TripModel model = (TripModel)tripsDataGrid.SelectedItem;
+
+            CreateSeatWindow createSeat = new CreateSeatWindow(this, model);
+            this.Hide();
+            createSeat.ShowDialog();
+        }
+
+        public void CreateSeatFormClosed()
+        {
+            this.Show();
+        }
+
+        public void SeatCreated(TripModel model)
+        {
+            Trips.Remove(Trips.Find(T => T.No == model.No));
+            Trips.AddLast(model);
+
+            WireUpLists();
+
+            IsChange = true;
+        }
+
+        public void TripUpdated(TripModel model)
+        {
+            Trips.Remove(Trips.Find(T => T.No == model.No));
+            Trips.AddLast(model);
+
+            IsChange = true;
+            WireUpLists();
         }
     }
 }

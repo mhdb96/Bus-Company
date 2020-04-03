@@ -102,20 +102,7 @@ namespace TASLibrary.DataAccess
                     }                    
                 case DbInfo.TripCount:
                     {
-                        string[] line = data[1].Split(';');
-                        int tripCount = Convert.ToInt32(line[1]);
-                        if(number == 1)
-                        {
-                            tripCount++;
-                        }
-                        else if(number == 0)
-                        {
-                            if(tripCount != 0)
-                            {
-                                tripCount--;
-                            }                            
-                        }
-                        data[1] = $"Trip Count;{tripCount};";
+                        data[1] = $"Trip Count;{number};";
                         break;
                     }                                    
             }
@@ -148,7 +135,7 @@ namespace TASLibrary.DataAccess
             if(!File.Exists(dbInfoPath))
             {
                 string[] data = new string[2];
-                data[0] = "Trip Id;1;";
+                data[0] = "Trip Id;0;";
                 data[1] = "Trip Count;0;";
                 File.WriteAllLines(dbInfoPath, data, Encoding.GetEncoding("iso-8859-9"));
                 // TODO Log

@@ -45,6 +45,14 @@ namespace TASLibrary.Models
         }
         public CLinkedList<SeatModel> Seats { get; set; } = new CLinkedList<SeatModel>();
 
+        public void CreateSeats()
+        {
+            for (int i = 0; i < Bus.Capacity; i++)
+            {
+                Seats.AddLast(new SeatModel(i + 1, new PassengerModel(), SeatStatus.Empty));
+            }
+        }
+
         public TripModel()
         {
 

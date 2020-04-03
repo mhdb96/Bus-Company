@@ -142,9 +142,32 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                x:Name="manageSeatsButton"
+                                Click="manageSeatsButton_Click"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                ToolTip="Manage Seats">
+                                    <materialDesign:PackIcon
+                                    Kind="Settings"
+                                    Height="24"
+                                    Width="24" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
 
             </DataGrid>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                FontWeight="Bold"
+                x:Name="tripCountTextBlock"/>
 
             <Button
                 Grid.Column="3"
