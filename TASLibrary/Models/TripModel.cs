@@ -47,6 +47,7 @@ namespace TASLibrary.Models
 
         public void CreateSeats()
         {
+            Seats.Clear();
             for (int i = 0; i < Bus.Capacity; i++)
             {
                 Seats.AddLast(new SeatModel(i + 1, new PassengerModel(), SeatStatus.Empty));
@@ -166,6 +167,8 @@ namespace TASLibrary.Models
             }
             else
             {
+                Seats.Clear();
+
                 for (int i = 0; i < Bus.Capacity; i++)
                 {
                     Seats.AddLast(new SeatModel(i+1, new PassengerModel(), SeatStatus.Empty));

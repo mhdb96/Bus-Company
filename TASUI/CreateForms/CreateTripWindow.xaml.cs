@@ -72,7 +72,7 @@ namespace TASUI.CreateForms
             // if there is a sold seat you can't change the bus
             foreach (SeatModel seat in model.Seats)
             {
-                if (seat.Status == SeatStatus.Reserved || seat.Status == SeatStatus.Reserved)
+                if (seat.Status == SeatStatus.Sold || seat.Status == SeatStatus.Reserved)
                 {
                     busesCombobox.IsEnabled = false;
 
@@ -100,10 +100,17 @@ namespace TASUI.CreateForms
         {
             TripModel model = new TripModel();
 
+            bool isBusChanged = false;
+
             if (isUpdate)
             {
                 model = editTripData;
-            }
+                
+                if (model.Bus != (BusModel)busesCombobox.SelectedItem)
+                {
+                    isBusChanged = true;
+                }
+            }            
             
             model.No = int.Parse(tripCodeTextBox.Text);
             model.Destination = (DestinationModel)destinationsCombobox.SelectedItem;
@@ -122,6 +129,11 @@ namespace TASUI.CreateForms
             }
             else
             {
+                if (isBusChanged)
+                {
+                    model.CreateSeats();
+                }
+
                 CallingWindow.TripUpdated(model);
             }         
             

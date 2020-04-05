@@ -10,6 +10,6 @@ namespace TASUI.Requesters
     public interface ICreateSeatRequester
     {
         void CreateSeatFormClosed();
-        void SeatCreated(TripModel trip);
+        void SeatCreated(TripModel trip, List<string> logs);
     }
 }

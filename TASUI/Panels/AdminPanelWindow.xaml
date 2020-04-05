@@ -84,8 +84,9 @@
                         Binding="{Binding Destination.Name}"
                         Header="Destination" />
 
-                        <materialDesign:DataGridTextColumn
+                    <materialDesign:DataGridTextColumn
                         Binding="{Binding Time}"
+                        SortDirection="Ascending"
                         Header="Departure Time" />
 
                     <materialDesign:DataGridTextColumn
@@ -168,6 +169,16 @@
                 Grid.Column="0"
                 FontWeight="Bold"
                 x:Name="tripCountTextBlock"/>
+
+            <Button
+                Grid.Column="1"
+                Grid.Row="3"
+                Width="250"
+                HorizontalAlignment="Left"
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                x:Name="openDirectoryButton" 
+                Click="openDirectoryButton_Click"
+                Content="Open Files Directory" />
 
             <Button
                 Grid.Column="3"

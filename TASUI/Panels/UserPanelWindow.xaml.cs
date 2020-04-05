@@ -82,12 +82,14 @@ namespace TASUI.Panels
             this.Show();
         }
 
-        public void SeatCreated(TripModel model)
+        public void SeatCreated(TripModel model, List<string> seatLogs)
         {
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
 
             GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
+
+            GlobalConfig.Connection.WriteLogsToFile(seatLogs);
 
             WireUpLists();
         }

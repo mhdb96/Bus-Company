@@ -25,6 +25,8 @@ namespace TASUI.CreateForms
     {
         TripModel Trip;
         ICreateSeatRequester CallingWindow;
+        List<string> logs = new List<string>();
+
         public CreateSeatWindow(ICreateSeatRequester caller, TripModel trip)
         {
             InitializeComponent();
@@ -63,6 +65,9 @@ namespace TASUI.CreateForms
                     SeatModel seat = Trip.Seats.Find(S => S.No.ToString() == seatNumber);
                     seat.Status = SeatStatus.Empty;
                     seat.Passenger = new PassengerModel();
+
+                    // add log
+                    logs.Add($"{DateTime.Now.ToLongTimeString()} - The ticket in the {seatNumber}th seat in trip {Trip.No} was canceled.");
 
                     break;
                 }
@@ -131,6 +136,13 @@ namespace TASUI.CreateForms
                 {
                     if (seat.No.ToString() == passenger.seatNumber.Text)
                     {
+                        bool isLog = true;
+
+                        if (seat.Status == SeatStatus.Reserved || seat.Status == SeatStatus.Sold)
+                        {
+                            isLog = false;
+                        }
+
                         // seat status
                         if (passenger.seatStatusComboBox.SelectedIndex == 0)
                         {
@@ -153,12 +165,19 @@ namespace TASUI.CreateForms
 
                         seat.Passenger.Name = passenger.passengerNameTextBox.Text;
 
+                        // add log
+                        if (isLog)
+                        {
+                            string status = seat.Status == SeatStatus.Sold ? "purchased" : "rezerved";
+                            logs.Add($"{DateTime.Now.ToLongTimeString()} - The {seat.No.ToString()}th seat in trip {Trip.No} was {status}.");
+                        }                       
+
                         break;
                     }
                 }
             }
                         
-            CallingWindow.SeatCreated(Trip);
+            CallingWindow.SeatCreated(Trip, logs);
             this.Close();
         }
     }

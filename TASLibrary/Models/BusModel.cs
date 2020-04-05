@@ -13,6 +13,7 @@ namespace TASLibrary.Models
     {
         public string Plate { get; set; }
         public int Capacity { get; set; }
+        public string fullBusInfo { get { return Plate + " - " + Capacity.ToString() + " Seats"; } set { } }
 
         public BusModel ()
         {

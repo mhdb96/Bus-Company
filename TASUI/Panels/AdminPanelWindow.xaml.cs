@@ -33,6 +33,8 @@ namespace TASUI.Panels
         int TripCount = GlobalConfig.Connection.GetDbInfo(DbInfo.TripCount);
         int TripId = GlobalConfig.Connection.GetDbInfo(DbInfo.TripId);
 
+        List<string> logs = new List<string>();
+
         bool IsChange
         {
             get { return isChange; }
@@ -87,13 +89,31 @@ namespace TASUI.Panels
         }
 
         public void TripCreated(TripModel model)
-        {
-            TripCount++;
-
+        {      
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
 
+            // trip created log
+            logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip {model.No} has been created.");
+
             TripId = model.No;
+
+            // Trip id log
+            logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip id updated to {TripId}.");
+
+            TripCount++;
+            // trip count log
+            logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip count updated to {TripCount}.");
+
+            IsChange = true;
+            WireUpLists();
+        }
+        public void TripUpdated(TripModel model)
+        {
+            Trips.Remove(Trips.Find(T => T.No == model.No));
+            Trips.AddLast(model);
+
+            logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip {model.No} has been updated.");
 
             IsChange = true;
             WireUpLists();
@@ -130,7 +150,13 @@ namespace TASUI.Panels
             {
                 Trips.Remove(model);
 
+                // remove log
+                logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip {model.No} has been deleted.");
+
                 TripCount--;
+
+                // trip count log
+                logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip count updated to {TripCount}.");
 
                 IsChange = true;
             }
@@ -140,15 +166,22 @@ namespace TASUI.Panels
         { 
             if (IsChange)
             {
-                MessageBoxResult result = MessageBox.Show("Do you want to save your changes?", "warning", MessageBoxButton.YesNo); // TODO daha sonra material dialog eklenecek.
+                MessageBoxResult result = MessageBox.Show("Do you want to save your changes?", "Warning", MessageBoxButton.YesNo); // TODO daha sonra material dialog eklenecek.
 
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Trips insert to file
                     GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
 
-                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, TripId);
+                    // Trip id update in file
+                    GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, TripId);                    
 
+                    // Trip count update in file
                     GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
+
+                    // All the logs write to log file
+                    GlobalConfig.Connection.WriteLogsToFile(logs);
+                    logs.Clear();
 
                     tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
                 }
@@ -159,11 +192,18 @@ namespace TASUI.Panels
 
         private void saveChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
+            // Trips insert to file
+            GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);            
 
+            // Trip id update in file and add to log
             GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, TripId);
 
+            // Trip count update in file and add to log
             GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
+
+            // All the logs write to log file
+            GlobalConfig.Connection.WriteLogsToFile(logs);
+            logs.Clear();
 
             tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
 
@@ -208,23 +248,21 @@ namespace TASUI.Panels
             this.Show();
         }
 
-        public void SeatCreated(TripModel model)
+        public void SeatCreated(TripModel model, List<string> seatLogs)
         {
             Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
+
+            logs = logs.Concat(seatLogs).ToList();
 
             WireUpLists();
 
             IsChange = true;
         }
 
-        public void TripUpdated(TripModel model)
+        private void openDirectoryButton_Click(object sender, RoutedEventArgs e)
         {
-            Trips.Remove(Trips.Find(T => T.No == model.No));
-            Trips.AddLast(model);
-
-            IsChange = true;
-            WireUpLists();
+            System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"TripsDB\\");
         }
     }
 }

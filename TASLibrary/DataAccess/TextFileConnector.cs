@@ -16,16 +16,20 @@ namespace TASLibrary.DataAccess
     {        
         const string dbFolderName = @"TripsDB\\DbFiles\\";
         const string textFolderName = @"TripsDB\\";
+        const string logFolderName = @"TripsDB\\LogFiles\\";
         string dbFilesDirectory = "";
         string textFilesDirectory = "";
+        string logFilesDirectory = "";
         string dbInfoPath = "";
 
         public TextFileConnector()
         {
             dbFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + dbFolderName;
             textFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + textFolderName;
+            logFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + logFolderName;
             Directory.CreateDirectory(dbFilesDirectory);
             Directory.CreateDirectory(textFilesDirectory);
+            Directory.CreateDirectory(logFilesDirectory);
             dbInfoPath = $"{dbFilesDirectory}dbinfo.info";
         }
         public CLinkedList<BusModel> GetBus_All()
@@ -73,6 +77,18 @@ namespace TASLibrary.DataAccess
             }
             filePath = TextFilePathFinder(selectedDate);
             File.WriteAllText(filePath, trips.ToString("Trips"), Encoding.GetEncoding("iso-8859-9"));
+        }
+        public string LogFilePathFinder(DateTime date)
+        {
+            string dateToPath = date.ToShortDateString();
+            dateToPath = dateToPath.Replace('/', '.');
+            string filePath = $"{logFilesDirectory}logs - {dateToPath}.txt";
+            return filePath;
+        }
+        public void WriteLogsToFile(List<string> data)
+        {
+            string logFilePath = LogFilePathFinder(DateTime.Now);
+            File.AppendAllLines(logFilePath, data, Encoding.GetEncoding("iso-8859-9"));
         }
         public string FilePathFinder(DateTime date)
         {
@@ -138,7 +154,10 @@ namespace TASLibrary.DataAccess
                 data[0] = "Trip Id;0;";
                 data[1] = "Trip Count;0;";
                 File.WriteAllLines(dbInfoPath, data, Encoding.GetEncoding("iso-8859-9"));
-                // TODO Log
+
+                List<string> log = new List<string>();
+                log.Add("dbinfo.info file created.");
+                WriteLogsToFile(log);
             }
         }
     }
