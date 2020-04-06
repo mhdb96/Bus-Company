@@ -71,7 +71,7 @@ namespace TASUI.Panels
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
         {
-            int lastCreatedTripId = GlobalConfig.Connection.GetDbInfo(DbInfo.TripId) + 1;
+            int lastCreatedTripId = TripId + 1;
 
             CreateTripWindow createTrip = new CreateTripWindow(this, lastCreatedTripId, selectedDate);
             this.Hide();

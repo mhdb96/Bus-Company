@@ -139,18 +139,18 @@ namespace TASLibrary.Models
             return !(lhs == rhs);
         }
 
-        public override int GetHashCode()
-        {
-            int hashCode = -1098416267;
-            hashCode = hashCode * -1521134295 + No.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<DestinationModel>.Default.GetHashCode(Destination);
-            hashCode = hashCode * -1521134295 + Date.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<BusModel>.Default.GetHashCode(Bus);
-            hashCode = hashCode * -1521134295 + EqualityComparer<DriverModel>.Default.GetHashCode(Driver);
-            hashCode = hashCode * -1521134295 + SeatPrice.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<CLinkedList<SeatModel>>.Default.GetHashCode(Seats);            
-            return hashCode;
-        }
+        //public override int GetHashCode()
+        //{
+        //    int hashCode = -1098416267;
+        //    hashCode = hashCode * -1521134295 + No.GetHashCode();
+        //    hashCode = hashCode * -1521134295 + EqualityComparer<DestinationModel>.Default.GetHashCode(Destination);
+        //    hashCode = hashCode * -1521134295 + Date.GetHashCode();
+        //    hashCode = hashCode * -1521134295 + EqualityComparer<BusModel>.Default.GetHashCode(Bus);
+        //    hashCode = hashCode * -1521134295 + EqualityComparer<DriverModel>.Default.GetHashCode(Driver);
+        //    hashCode = hashCode * -1521134295 + SeatPrice.GetHashCode();
+        //    hashCode = hashCode * -1521134295 + EqualityComparer<CLinkedList<SeatModel>>.Default.GetHashCode(Seats);            
+        //    return hashCode;
+        //}
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {

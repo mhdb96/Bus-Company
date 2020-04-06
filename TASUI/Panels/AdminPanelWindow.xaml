@@ -58,7 +58,7 @@
                 Click="AddNewTripButton_Click"
                 Content="Add New Trip" />
 
-            <DataGrid
+            <DataGrid                
                 Margin="0 40 0 0"
                 Grid.Column="0"
                 Grid.Row="1"
