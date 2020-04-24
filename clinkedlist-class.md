@@ -25,11 +25,11 @@ where T : class {}
 
 ## Implemented Interfaces:
 
-* \*\*\*\*[**ICollection&lt;T&gt;**](clinkedlist-class.md#icollection-less-than-t-greater-than)
-* \*\*\*\*[**IEquatable&lt;CLinkedList&lt;T&gt;&gt;**](clinkedlist-class.md#iequatable-less-than-clinkedlist-less-than-t-greater-than-greater-than)
-* \*\*\*\*[**ISerializable**](clinkedlist-class.md#iserializable)
-* \*\*\*\*[**IDeserializationCallback**](clinkedlist-class.md#ideserializationcallback)
-* \*\*\*\*[**INotifyCollectionChanged**](clinkedlist-class.md#inotifycollectionchanged)\*\*\*\*
+* [ICollection](clinkedlist-class.md#icollection)
+* [IEquatable](clinkedlist-class.md#iequatable)
+* [ISerializable](clinkedlist-class.md#iserializable)
+* [IDeserializationCallback](clinkedlist-class.md#ideserializationcallback)
+* [INotifyCollectionChanged](clinkedlist-class.md#inotifycollectionchanged)
 
 ## Class Members
 
@@ -517,7 +517,7 @@ public string ToString(string listName)
 }
 ```
 
-## ICollection&lt;T&gt;
+## ICollection
 
 ```csharp
 public IEnumerator<T> GetEnumerator()
@@ -565,7 +565,7 @@ public bool Contains(T data)
 }
 ```
 
-## IEquatable&lt;CLinkedList&lt;T&gt;&gt;
+## IEquatable
 
 ```csharp
 public bool Equals(CLinkedList<T> other)
