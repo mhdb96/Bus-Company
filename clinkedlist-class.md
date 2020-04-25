@@ -36,6 +36,20 @@ where T : class {}
 
 [ICollection&lt;T&gt;](clinkedlist-class.md#icollection-less-than-t-greater-than), [IEquatable&lt;T&gt;](clinkedlist-class.md#iequatable-less-than-t-greater-than), [ISerializable](clinkedlist-class.md#iserializable), [IDeserializationCallback](clinkedlist-class.md#ideserializationcallback), [INotifyCollectionChanged](clinkedlist-class.md#inotifycollectionchanged)
 
+## Remarks
+
+CLinkedList is a general-purpose linked list. It supports enumerators and implements the ICollection interface, consistent with other collection classes in the .NET Framework. 
+
+CLinkedList provides separate nodes of type CNode, so insertion and removal are O\(1\) operations. 
+
+The list maintains an internal count, getting the Count property is an O\(1\) operation. 
+
+Each node in a CLinkedList object is of the type CNode. Because the CLinkedList is doubly linked, each node points forward to the Next node and backward to the Previous node. 
+
+If the CLinkedList is empty, the First and Last properties contain null. 
+
+The CLinkedList class does not support chaining, splitting, cycles, or other features that can leave the list in an inconsistent state.
+
 ## Class Members
 
 ### Private Members:
