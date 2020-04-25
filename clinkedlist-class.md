@@ -66,7 +66,7 @@ private SerializationInfo _siInfo;
 
 ### Public Members
 
-`First`: Gets the first element in the list of type `T`.
+* `First`: Gets the first element in the list of type `T`.
 
 ```csharp
 public T First { get { return _head.Data; } }
@@ -94,6 +94,8 @@ public bool IsReadOnly { get { return false; } }
 
 ### `AddNodeToEmptyList(CNode<T>)`
 
+Adds the specified node to an empty list. 
+
 ```csharp
 private void AddNodeToEmptyList(CNode<T> newNode)
 {
@@ -108,6 +110,8 @@ private void AddNodeToEmptyList(CNode<T> newNode)
 ```
 
 ### `InternalFind(int)`
+
+Finds the node at the specified index.
 
 ```csharp
 private CNode<T> InternalFind(int index)
@@ -140,6 +144,8 @@ private CNode<T> InternalFind(int index)
 
 ### `InternalFind(T)`
 
+Finds the node that contains the same specified data. 
+
 ```csharp
 private CNode<T> InternalFind(T data)
 {
@@ -168,6 +174,8 @@ private CNode<T> InternalFind(T data)
 
 ### `CreateList(T[])`
 
+Initializes the list after deserialization from the specified array.   
+
 ```csharp
 private void CreateList(T[] array)
 {
@@ -180,7 +188,7 @@ private void CreateList(T[] array)
 
 ## Public Methods
 
-### `this [int]`
+### `this[int]`
 
 Gets or sets the element at the specified index.
 
@@ -199,7 +207,7 @@ public T this[int index]
 }
 ```
 
-### `AddLast (T)`
+### `AddLast(T)`
 
 Adds a new node containing the specified value at the end of the list.
 
@@ -228,7 +236,7 @@ public void AddLast(T data)
 }
 ```
 
-### `AddFirst (T)`
+### `AddFirst(T)`
 
 Adds a new node containing the specified value at the start of the list.
 
