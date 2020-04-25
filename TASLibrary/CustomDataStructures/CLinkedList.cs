@@ -2,14 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Runtime;
-using System.Runtime.Versioning;
-using System.Diagnostics.Contracts;
-using System.Collections.ObjectModel;
-using System.Security.Permissions;
 using System.Runtime.Serialization;
 using System.Collections.Specialized;
 
@@ -20,7 +13,12 @@ namespace TASLibrary.CustomDataStructures
     /// </summary>
     /// <typeparam name="T">List's node data type</typeparam>
     [Serializable]
-    public class CLinkedList<T> : ICollection<T>, IEquatable<CLinkedList<T>>, ISerializable, IDeserializationCallback, INotifyCollectionChanged where T : class
+    public class CLinkedList<T> : 
+        ICollection<T>, 
+        IEquatable<CLinkedList<T>>, 
+        ISerializable, 
+        IDeserializationCallback, 
+        INotifyCollectionChanged where T : class
     {
         private CNode<T> _head;
         private CNode<T> _tail;
