@@ -59,7 +59,7 @@ namespace TASUI.Panels
             IsChange = false;
             tripsDataGrid.ItemsSource = Trips;
 
-            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
+            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();           
         }
 
         private void WireUpLists()
