@@ -7,9 +7,14 @@ description: >-
 # CLinkedList Class
 
 CLinkedList class, is a custom C\# generic class implementing basic Doubly linked list operations with some extra features for ease of use and better integration with other .Net classes especially for WPF UI elements.  
-Below is a very detailed class documentation:
-
 We chose the class to be generic so the list elements can be of any type chosen by the end user
+
+## CLinkedList Class
+
+Namespace: TASLibrary.CustomDataStructures  
+Assembly: TASLibrary.dll
+
+Represents a doubly linked list.
 
 {% code title="CLinkedList.cs" %}
 ```csharp
@@ -23,37 +28,37 @@ where T : class {}
 ```
 {% endcode %}
 
-## Implemented Interfaces:
+### **Type Parameters**
 
-* [ICollection](clinkedlist-class.md#icollection)
-* [IEquatable](clinkedlist-class.md#iequatable)
-* [ISerializable](clinkedlist-class.md#iserializable)
-* [IDeserializationCallback](clinkedlist-class.md#ideserializationcallback)
-* [INotifyCollectionChanged](clinkedlist-class.md#inotifycollectionchanged)
+`T` ****Specifies the element type of the linked list.
+
+### Implements
+
+[ICollection&lt;T&gt;](clinkedlist-class.md#icollection-less-than-t-greater-than), [IEquatable&lt;T&gt;](clinkedlist-class.md#iequatable-less-than-t-greater-than), [ISerializable](clinkedlist-class.md#iserializable), [IDeserializationCallback](clinkedlist-class.md#ideserializationcallback), [INotifyCollectionChanged](clinkedlist-class.md#inotifycollectionchanged)
 
 ## Class Members
 
 ### Private Members:
 
-* \_head: The first node in the list of type CNode&lt;T&gt;.
+* `_head`: The first node in the list of type `CNode<T>`.
 
 ```csharp
 private CNode<T> _head;
 ```
 
-* \_tail: The last node in the list of type CNode&lt;T&gt;.
+* `_tail`: The last node in the list of type `CNode<T>`.
 
 ```csharp
 private CNode<T> _tail;
 ```
 
-* \_count: Nodes count in the list of type int.
+* `_count`: Nodes count in the list of type `int`.
 
 ```csharp
 private int _count;
 ```
 
-* \_siInfo; Serialization data used while deserialization of the Type SerializationInfo.
+* `_siInfo`; Serialization data used while deserialization of the Type `SerializationInfo`.
 
 ```csharp
 private SerializationInfo _siInfo;
@@ -61,25 +66,25 @@ private SerializationInfo _siInfo;
 
 ### Public Members
 
-First: The first element in the list of type T.
+`First`: Gets the first element in the list of type `T`.
 
 ```csharp
 public T First { get { return _head.Data; } }
 ```
 
-* Last: The last element in the list of type T.
+* `Last`: Gets the last element in the list of type `T`.
 
 ```csharp
 public T Last { get { return _tail.Data; } }
 ```
 
-* Count: Nodes count in the list of type int.
+* `Count`: Gets the number of nodes actually contained in the list.
 
 ```csharp
 public int Count { get { return _count; } }
 ```
 
-* IsReadOnly; Determines if the class is read only or not of type bool.
+* `IsReadOnly`; Determines if the class is read only or not of type `bool`.
 
 ```csharp
 public bool IsReadOnly { get { return false; } }
@@ -87,7 +92,7 @@ public bool IsReadOnly { get { return false; } }
 
 ## Private Methods
 
-### AddNodeToEmptyList \(CNode newNode\)
+### `AddNodeToEmptyList(CNode<T>)`
 
 ```csharp
 private void AddNodeToEmptyList(CNode<T> newNode)
@@ -102,7 +107,7 @@ private void AddNodeToEmptyList(CNode<T> newNode)
 }
 ```
 
-### InternalFind \(int index\)
+### `InternalFind(int)`
 
 ```csharp
 private CNode<T> InternalFind(int index)
@@ -133,7 +138,7 @@ private CNode<T> InternalFind(int index)
 }
 ```
 
-### InternalFind \(T data\)
+### `InternalFind(T)`
 
 ```csharp
 private CNode<T> InternalFind(T data)
@@ -161,7 +166,7 @@ private CNode<T> InternalFind(T data)
 }
 ```
 
-### CreateList \(T \[\] array\)
+### `CreateList(T[])`
 
 ```csharp
 private void CreateList(T[] array)
@@ -175,7 +180,9 @@ private void CreateList(T[] array)
 
 ## Public Methods
 
-### this \[index\]
+### `this [int]`
+
+Gets or sets the element at the specified index.
 
 ```csharp
 public T this[int index]
@@ -192,7 +199,9 @@ public T this[int index]
 }
 ```
 
-### AddLast \(T data\)
+### `AddLast (T)`
+
+Adds a new node containing the specified value at the end of the list.
 
 ```csharp
 public void AddLast(T data)
@@ -219,7 +228,9 @@ public void AddLast(T data)
 }
 ```
 
-### AddFirst \(T data\)
+### `AddFirst (T)`
+
+Adds a new node containing the specified value at the start of the list.
 
 ```csharp
 public void AddFirst(T data)
@@ -246,7 +257,9 @@ public void AddFirst(T data)
 }
 ```
 
-### RemoveLast \(\)
+### `RemoveLast()`
+
+ Removes the node at the end of the list.
 
 ```csharp
 public void RemoveLast()
@@ -283,7 +296,9 @@ public void RemoveLast()
 }
 ```
 
-### RemoveFirst \(\)
+### `RemoveFirst()`
+
+ Removes the node at the start of the list.
 
 ```csharp
 public void RemoveFirst()
@@ -320,7 +335,9 @@ public void RemoveFirst()
 }
 ```
 
-### Remove \(T data\)
+### `Remove(T)`
+
+Removes the first occurrence of the specified value from the list.
 
 ```csharp
 public bool Remove(T data)
@@ -360,7 +377,9 @@ public bool Remove(T data)
 }
 ```
 
-### RemoveAt \(int index\)
+### `RemoveAt(int)`
+
+ Removes the node at the specified index from the list.
 
 ```csharp
 public void RemoveAt(int index)
@@ -392,7 +411,9 @@ public void RemoveAt(int index)
 }
 ```
 
-### Clear \(\)
+### `Clear()`
+
+Removes all nodes from the list.
 
 ```csharp
 public void Clear()
@@ -410,7 +431,9 @@ public void Clear()
 }
 ```
 
-### Find \(T data\)
+### `Find(T)`
+
+Finds the first node that contains the specified value.
 
 ```csharp
 public T Find(T data)
@@ -423,7 +446,9 @@ public T Find(T data)
 }
 ```
 
-### Find \(Predicate&lt;T&gt; match\)
+### `Find(Predicate<T>)`
+
+Finds the first node that matches the specified predicate.
 
 ```csharp
 public T Find(Predicate<T> match)
@@ -432,7 +457,6 @@ public T Find(Predicate<T> match)
     {
         throw new ArgumentNullException();
     }
-    //??? Contract.EndContractBlock();
     CNode<T> currentNode = _head; 
     while (currentNode != null)
     {
@@ -446,7 +470,9 @@ public T Find(Predicate<T> match)
 }
 ```
 
-### FindAll \(Predicate&lt;T&gt; match\)
+### `FindAll(Predicate<T>)`
+
+Finds all the nodes that match the specified predicate.
 
 ```csharp
 public CLinkedList<T> FindAll(Predicate<T> match)
@@ -470,7 +496,9 @@ public CLinkedList<T> FindAll(Predicate<T> match)
 }
 ```
 
-### ToString \(\)
+### `ToString()`
+
+Returns a string that represents the current object. \(**Override**\)
 
 ```csharp
 public override string ToString()
@@ -494,7 +522,9 @@ public override string ToString()
 }
 ```
 
-### ToString \(string listName\)
+### `ToString(string)`
+
+Returns a string that represents the current object with the list name inserted to it.
 
 ```csharp
 public string ToString(string listName)
@@ -517,7 +547,13 @@ public string ToString(string listName)
 }
 ```
 
-## ICollection
+## [ICollection&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.icollection-1?view=netcore-3.1)
+
+Defines methods to manipulate generic collections.
+
+### `GetEnumerator()`
+
+Returns an enumerator that iterates through the linked list as a collection.
 
 ```csharp
 public IEnumerator<T> GetEnumerator()
@@ -536,12 +572,20 @@ IEnumerator IEnumerable.GetEnumerator()
 }
 ```
 
+### `Add()`
+
+Adds an item at the end of the list.
+
 ```csharp
 public void Add(T data)
 {
     AddLast(data);
 }
 ```
+
+### `CopyTo(T[], int)`
+
+Copies the entire list to a compatible one-dimensional [Array](https://docs.microsoft.com/en-us/dotnet/api/system.array?view=netcore-3.1), starting at the specified index of the target array.
 
 ```csharp
 public void CopyTo(T[] array, int arrayIndex)
@@ -558,6 +602,10 @@ public void CopyTo(T[] array, int arrayIndex)
 }
 ```
 
+### `Contains(T)`
+
+Checks if a given element exists in the list.
+
 ```csharp
 public bool Contains(T data)
 {
@@ -565,7 +613,13 @@ public bool Contains(T data)
 }
 ```
 
-## IEquatable
+## [`IEquatable<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1?view=netcore-3.1)
+
+Defines a generalized method that a value type or class implements to create a type-specific method for determining equality of instances.
+
+### `Equals(CLinkedList<T>)`
+
+Determines whether the specified object is equal to the current object.
 
 ```csharp
 public bool Equals(CLinkedList<T> other)
@@ -586,12 +640,20 @@ public bool Equals(CLinkedList<T> other)
 }
 ```
 
+### `Equals(CLinkedList<T>)`
+
+Determines whether the specified object is equal to the current object. \(**Override**\)
+
 ```csharp
 public override bool Equals(object obj)
 {
     return this.Equals(obj as CLinkedList<T>);
 }
 ```
+
+### `GetHashCode`
+
+Serves as the default hash function.
 
 ```csharp
 public override int GetHashCode()
@@ -603,6 +665,10 @@ public override int GetHashCode()
             return hashCode;
         }
 ```
+
+### `==(CLinkedList<T>, CLinkedList<T>)`
+
+Determines whether the first object is equal to the other object.
 
 ```csharp
 public static bool operator ==(CLinkedList<T> lhs, CLinkedList<T> rhs)
@@ -620,6 +686,10 @@ public static bool operator ==(CLinkedList<T> lhs, CLinkedList<T> rhs)
 }
 ```
 
+### `!=(CLinkedList<T>, CLinkedList<T>)`
+
+Determines whether the first object is not equal to the other object.
+
 ```csharp
 public static bool operator !=(CLinkedList<T> lhs, CLinkedList<T> rhs)
 {
@@ -627,7 +697,13 @@ public static bool operator !=(CLinkedList<T> lhs, CLinkedList<T> rhs)
 }
 ```
 
-## ISerializable
+## [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable?view=netcore-3.1)
+
+Allows an object to control its own serialization and deserialization.
+
+### `GetObjectData(SerializationInfo, StreamingContext)`
+
+ Implements the [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable?view=netcore-3.1) interface and returns the data needed to serialize the list instance.
 
 ```csharp
 public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -645,6 +721,10 @@ public void GetObjectData(SerializationInfo info, StreamingContext context)
 }
 ```
 
+### `CLinkedList<>(SerializationInfo, StreamingContext)`
+
+ Initializes a new instance of the CLinkedList class that is serializable with the specified [SerializationInfo](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.serializationinfo?view=netcore-3.1) and [StreamingContext](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.streamingcontext?view=netcore-3.1).
+
 ```csharp
 public CLinkedList(SerializationInfo info, StreamingContext context)
 {
@@ -652,7 +732,13 @@ public CLinkedList(SerializationInfo info, StreamingContext context)
 }
 ```
 
-## IDeserializationCallback
+## [IDeserializationCallback](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.ideserializationcallback?view=netcore-3.1)
+
+Indicates that a class is to be notified when deserialization of the entire object graph has been completed.
+
+### `OnDeserialization(object sender)`
+
+Implements the [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable?view=netcore-3.1) interface and raises the deserialization event when the deserialization is complete.
 
 ```csharp
 public void OnDeserialization(object sender)
@@ -662,7 +748,13 @@ public void OnDeserialization(object sender)
 }
 ```
 
-## INotifyCollectionChanged
+## [INotifyCollectionChanged](https://docs.microsoft.com/en-us/dotnet/api/system.collections.specialized.inotifycollectionchanged?view=netcore-3.1)
+
+Notifies listeners of dynamic changes, such as when an item is added and removed or the whole list is cleared.
+
+### `CollectionChanged`
+
+Occurs when the collection changes.
 
 ```csharp
 public event NotifyCollectionChangedEventHandler CollectionChanged;
