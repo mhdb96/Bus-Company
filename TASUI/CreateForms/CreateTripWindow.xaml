@@ -53,6 +53,8 @@
             </ComboBox>
 
             <TextBox
+                MaxLength="5"
+                PreviewTextInput="seatPriceTextBox_PreviewTextInput"
                 x:Name="seatPriceTextBox"
                 materialDesign:HintAssist.Hint="Seat Price"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"

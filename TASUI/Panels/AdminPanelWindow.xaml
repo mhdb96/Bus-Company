@@ -14,7 +14,6 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="CreateTripWindow" Height="600" Width="1200"
-        Closed="Window_Closed"
         Closing="Window_Closing">
 
     <Border Padding="50 30">
@@ -39,7 +38,6 @@
                 FontWeight="Bold"
                 Text="Trips"
                 Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
-            
             <DatePicker
                 Grid.Column="1"
                 Grid.Row="0"

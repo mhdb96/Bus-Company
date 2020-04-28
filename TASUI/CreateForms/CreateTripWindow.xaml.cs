@@ -17,6 +17,7 @@ using TASUI.Requesters;
 using TASLibrary;
 using TASLibrary.DataAccess;
 using TASLibrary.Enums;
+using System.Text.RegularExpressions;
 
 namespace TASUI.CreateForms
 {
@@ -133,12 +134,15 @@ namespace TASUI.CreateForms
                 {
                     model.CreateSeats();
                 }
-
                 CallingWindow.TripUpdated(model);
-            }         
-            
-            
+            }                                
             this.Close();
+        }
+
+        private void seatPriceTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

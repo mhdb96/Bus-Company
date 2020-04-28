@@ -52,7 +52,6 @@
     <Compile Include="Enums\DbInfo.cs" />
     <Compile Include="Enums\SeatStatus.cs" />
     <Compile Include="Enums\SexType.cs" />
-    <Compile Include="GlobalConfig.cs" />
     <Compile Include="Models\BusModel.cs" />
     <Compile Include="Models\DestinationModel.cs" />
     <Compile Include="Models\DriverModel.cs" />

@@ -54,6 +54,10 @@
       <Project>{a11097d7-92bf-41ea-84cb-7836e7f9ead5}</Project>
       <Name>TASLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TASUI\TASUI.csproj">
+      <Project>{E5360252-E014-4DEB-AA88-F9ED5888E94C}</Project>
+      <Name>TASUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
