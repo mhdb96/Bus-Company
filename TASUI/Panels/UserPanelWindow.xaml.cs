@@ -89,7 +89,7 @@ namespace TASUI.Panels
 
             GlobalConfig.Connection.Trip_InsertAll(Trips, selectedDate);
 
-            GlobalConfig.Connection.WriteLogsToFile(seatLogs);
+            GlobalConfig.Connection.Logger.WriteLogsToFile(seatLogs);
 
             WireUpLists();
         }

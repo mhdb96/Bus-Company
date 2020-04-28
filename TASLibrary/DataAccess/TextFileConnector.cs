@@ -12,25 +12,25 @@ using TASLibrary.Enums;
 
 namespace TASLibrary.DataAccess
 {
-    public class TextFileConnector //: IDataConnection
-    {        
-        const string dbFolderName = @"TripsDB\\DbFiles\\";
-        const string textFolderName = @"TripsDB\\";
-        const string logFolderName = @"TripsDB\\LogFiles\\";
-        string dbFilesDirectory = "";
-        string textFilesDirectory = "";
-        string logFilesDirectory = "";
-        string dbInfoPath = "";
+    public class TextFileConnector : IDataConnection
+    {   
+        private readonly string dbFilesDirectory;
+        private readonly string textFilesDirectory;
+        private readonly string logFilesDirectory;
+        private readonly string dbInfoPath;        
 
-        public TextFileConnector()
-        {
-            dbFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + dbFolderName;
-            textFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + textFolderName;
-            logFilesDirectory = AppDomain.CurrentDomain.BaseDirectory + logFolderName;
+        public Logger Logger { get; set; }
+
+        public TextFileConnector(FileDbInfo info)
+        {            
+            dbFilesDirectory = $"{info.ProjectDirectory}{info.DbFolderName}\\";
+            textFilesDirectory = $"{info.ProjectDirectory}{info.TextFolderName}\\";
+            logFilesDirectory = $"{info.ProjectDirectory}{info.LogFolderName}\\";
             Directory.CreateDirectory(dbFilesDirectory);
             Directory.CreateDirectory(textFilesDirectory);
             Directory.CreateDirectory(logFilesDirectory);
             dbInfoPath = $"{dbFilesDirectory}dbinfo.info";
+            Logger = new Logger(logFilesDirectory);
         }
         public CLinkedList<BusModel> GetBus_All()
         {
@@ -50,7 +50,7 @@ namespace TASLibrary.DataAccess
         public CLinkedList<TripModel> GetTrip_All(DateTime date)
         {
             CLinkedList<TripModel> t;
-            string filePath = FilePathFinder(date);
+            string filePath = FileHelper.FilePathFinder(date, dbFilesDirectory, "dat");
             try
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Open))
@@ -59,7 +59,7 @@ namespace TASLibrary.DataAccess
                     t = (CLinkedList<TripModel>)formatter.Deserialize(fs);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 t = new CLinkedList<TripModel>();                
             }
@@ -69,40 +69,14 @@ namespace TASLibrary.DataAccess
 
         public void Trip_InsertAll(CLinkedList<TripModel> trips, DateTime selectedDate)
         {
-            string filePath = FilePathFinder(selectedDate);
+            string filePath = FileHelper.FilePathFinder(selectedDate, dbFilesDirectory, "dat");
             using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
             {
                 IFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(fs, trips);               
             }
-            filePath = TextFilePathFinder(selectedDate);
+            filePath = FileHelper.FilePathFinder(selectedDate, textFilesDirectory, "txt");
             File.WriteAllText(filePath, trips.ToString("Trips"), Encoding.GetEncoding("iso-8859-9"));
-        }
-        public string LogFilePathFinder(DateTime date)
-        {
-            string dateToPath = date.ToShortDateString();
-            dateToPath = dateToPath.Replace('/', '.');
-            string filePath = $"{logFilesDirectory}logs - {dateToPath}.txt";
-            return filePath;
-        }
-        public void WriteLogsToFile(List<string> data)
-        {
-            string logFilePath = LogFilePathFinder(DateTime.Now);
-            File.AppendAllLines(logFilePath, data, Encoding.GetEncoding("iso-8859-9"));
-        }
-        public string FilePathFinder(DateTime date)
-        {
-            string dateToPath = date.ToShortDateString();
-            dateToPath = dateToPath.Replace('/', '.');
-            string filePath = $"{dbFilesDirectory}{dateToPath}.dat";            
-            return filePath;
-        }
-        public string TextFilePathFinder(DateTime date)
-        {
-            string dateToPath = date.ToShortDateString();
-            dateToPath = dateToPath.Replace('/', '.');
-            string filePath = $"{textFilesDirectory}{dateToPath}.txt";
-            return filePath;
         }
 
         public void UpdateDbInfo(DbInfo info, int number)
@@ -157,7 +131,7 @@ namespace TASLibrary.DataAccess
 
                 List<string> log = new List<string>();
                 log.Add("dbinfo.info file created.");
-                WriteLogsToFile(log);
+                Logger.WriteLogsToFile(log);
             }
         }
     }

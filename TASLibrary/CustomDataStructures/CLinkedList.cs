@@ -15,6 +15,7 @@ namespace TASLibrary.CustomDataStructures
     [Serializable]
     public class CLinkedList<T> : 
         ICollection<T>, 
+        //IEnumerable<T>,
         IEquatable<CLinkedList<T>>, 
         ISerializable, 
         IDeserializationCallback, 

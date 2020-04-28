@@ -180,7 +180,7 @@ namespace TASUI.Panels
                     GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
 
                     // All the logs write to log file
-                    GlobalConfig.Connection.WriteLogsToFile(logs);
+                    GlobalConfig.Connection.Logger.WriteLogsToFile(logs);
                     logs.Clear();
 
                     tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
@@ -202,7 +202,7 @@ namespace TASUI.Panels
             GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripCount, TripCount);
 
             // All the logs write to log file
-            GlobalConfig.Connection.WriteLogsToFile(logs);
+            GlobalConfig.Connection.Logger.WriteLogsToFile(logs);
             logs.Clear();
 
             tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();

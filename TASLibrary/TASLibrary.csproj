@@ -43,7 +43,10 @@
   <ItemGroup>
     <Compile Include="CustomDataStructures\CLinkedList.cs" />
     <Compile Include="CustomDataStructures\CNode.cs" />
+    <Compile Include="DataAccess\FileDbInfo.cs" />
+    <Compile Include="DataAccess\FilesManipulation.cs" />
     <Compile Include="DataAccess\IDataConnection.cs" />
+    <Compile Include="DataAccess\Logger.cs" />
     <Compile Include="DataAccess\PseudoConnector.cs" />
     <Compile Include="DataAccess\TextFileConnector.cs" />
     <Compile Include="Enums\DbInfo.cs" />
