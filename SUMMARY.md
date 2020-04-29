@@ -8,6 +8,7 @@
 * [Program's UI](programs-ui.md)
 * [Classes Documentation](classes-documentation/README.md)
   * [CLinkedList Class](classes-documentation/clinkedlist-class.md)
+  * [Useful Links](classes-documentation/useful-links.md)
 
 ## About Us
 
