@@ -48,7 +48,13 @@ namespace TASUI.Panels
             Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
             IsChange = false;
             tripsDataGrid.ItemsSource = Trips;
-            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();           
+            tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
+        }
+        private void WireUpLists()
+        {
+            tripsDataGrid.ItemsSource = null;
+            tripsDataGrid.Items.Clear();
+            tripsDataGrid.ItemsSource = Trips;
         }
 
         private void AddNewTripButton_Click(object sender, RoutedEventArgs e)
@@ -170,6 +176,8 @@ namespace TASUI.Panels
             {
                 AddNewTripButton.IsEnabled = true;
             }
+
+            WireUpLists();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

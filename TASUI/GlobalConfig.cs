@@ -14,10 +14,10 @@ namespace TASUI
         {
             FileDbInfoBuilder builder = new FileDbInfoBuilder();
             info = builder
-                .ProjectName("hamada")
-                .LogFolder("loooogs")
-                .TextFolder("text")
-                .DbFolder("mydms")
+                .ProjectName("BusXd")
+                .LogFolder("logs")
+                .TextFolder("trips")
+                .DbFolder("dbfiles")
                 .Directory(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+"\\")
                 .GetFileInfo();
             Connection = new TextFileConnector(info == null ? info = new FileDbInfo() : info);

@@ -81,7 +81,6 @@ namespace TASLibrary.CustomDataStructures
             }
             set
             {
-                index += 1;
                 InternalFind(index).Data = value;
             }
         }
@@ -104,7 +103,7 @@ namespace TASLibrary.CustomDataStructures
             if (_count != 0)
             {
                 T[] array = new T[_count];
-                CopyTo(array, 0);                
+                CopyTo(array, 0);
                 info.AddValue("values", array, typeof(T[]));
             }
         }
@@ -118,7 +117,17 @@ namespace TASLibrary.CustomDataStructures
         {
             _siInfo = info;
         }
-        
+
+        /// <summary>
+        /// Create the list on deserialization
+        /// </summary>
+        /// <param name="sender"></param>
+        public void OnDeserialization(object sender)
+        {
+            T[] array = (T[])_siInfo.GetValue("values", typeof(T[]));
+            CreateList(array);
+        }
+
         /// <summary>
         /// Adds the first node to the empty list 
         /// </summary>
@@ -518,7 +527,7 @@ namespace TASLibrary.CustomDataStructures
             {
                 return false;
             }
-            return (_head == other._head && _count == other._count);
+            return (_head == other._head && _count == other._count && _tail == other._tail);
         }
 
         /// <summary>
@@ -572,15 +581,7 @@ namespace TASLibrary.CustomDataStructures
             AddLast(data);
         }
 
-        /// <summary>
-        /// Create the list on deserialization
-        /// </summary>
-        /// <param name="sender"></param>
-        public void OnDeserialization(object sender)
-        {
-            T[] array = (T[])_siInfo.GetValue("values", typeof(T[]));
-            CreateList(array);
-        }
+        
 
         /// <summary>
         /// Checks if a given element exists in the list

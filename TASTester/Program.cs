@@ -28,8 +28,32 @@ namespace TASTester
             //GlobalConfig.Connection.UpdateDbInfo(DbInfo.TripId, 29);
             //Console.WriteLine(GlobalConfig.Connection.GetDbInfo(DbInfo.TripCount));
             //Console.WriteLine(GlobalConfig.Connection.GetDbInfo(DbInfo.TripId));
-            CLinkedList<TripModel> tri = TripModel.GetSampleData();
-            Console.WriteLine(tri.ToString("Trips"));
+            //CLinkedList<TripModel> tri = TripModel.GetSampleData();
+            //Console.WriteLine(tri.ToString("Trips"));
+
+            CLinkedList<TripModel> trips = new CLinkedList<TripModel>();
+            TripModel model = new TripModel();
+            model.No = 22;
+            model.Destination.Name = "Kocaeli";
+            model.Bus.Capacity = 10;
+            model.Bus.Plate = "ASD1234";
+            model.Driver.Name = "Ahmet";
+            model.Date = DateTime.Now;
+            model.Seats.AddLast(new SeatModel(1, new PassengerModel("muhammed", SexType.Male), SeatStatus.Sold));
+            TripModel test = new TripModel();
+            test.No = 22;
+            test.Destination.Name = "Locaeli";
+            test.Bus.Capacity = 17;
+            test.Bus.Plate = "ASD1234";
+            test.Driver.Name = "Ahmet";
+            test.Date = DateTime.Now;
+            test.Seats.AddLast(new SeatModel(1, new PassengerModel("Ahmad", SexType.Male), SeatStatus.Sold));
+            trips.AddLast(model);
+            trips.AddLast(test);
+
+            trips[0] = new TripModel();
+
+            Console.WriteLine(trips);
             Console.ReadLine();
         }
 
