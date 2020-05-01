@@ -75,10 +75,11 @@ namespace TASUI.CreateForms
         }
         private void CreateGridDefinition()
         {
-            foreach (SeatModel seat in Trip.Seats)
+            //foreach (SeatModel seat in Trip.Seats)
+            for (int i = 0; i < Trip.Seats.Count/4; i++)
             {
                 ColumnDefinition cd = new ColumnDefinition();
-                cd.Tag = seat;
+                //cd.Tag = seat;
                 cd.Width = new GridLength();
                 seatsGrid.ColumnDefinitions.Add(cd);
             }

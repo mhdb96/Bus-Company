@@ -45,7 +45,7 @@ namespace TASUI.Panels
             InitializeComponent();                        
             selectedDate = DateTime.Now;
             tripDate.SelectedDate = selectedDate;            
-            Trips = GlobalConfig.Connection.GetTrip_All(DateTime.Now);
+            Trips = GlobalConfig.Connection.GetTrip_All(selectedDate);
             IsChange = false;
             tripsDataGrid.ItemsSource = Trips;
             tripCountTextBlock.Text = "All Trips Count: " + TripCount.ToString();
@@ -72,7 +72,7 @@ namespace TASUI.Panels
 
         public void TripCreated(TripModel model)
         {      
-            Trips.Remove(Trips.Find(T => T.No == model.No));
+            //Trips.Remove(Trips.Find(T => T.No == model.No));
             Trips.AddLast(model);
             // trip created log
             logs.Add($"{DateTime.Now.ToLongTimeString()} - Trip {model.No} has been created.");
