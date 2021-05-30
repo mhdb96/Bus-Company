@@ -12,5 +12,7 @@
 
 ## About Us
 
+---
+
 * [🎆 Our Other Projects](https://projects.xdebuggers.com/)
 

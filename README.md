@@ -31,7 +31,7 @@ A data structure practice in which we are trying to create a custom generic link
 
 ## Developers' Info
 
-* **Muhammed Bedavi** ~ [Linkedin🔗](https://www.linkedin.com/in/mhdb96/) - [GitHub🔗](https://github.com/mhdb96)
+* **Muhammed AKSOY** ~ [Linkedin🔗](https://www.linkedin.com/in/mhdb96/) - [GitHub🔗](https://github.com/mhdb96)
 * **Talha Aydın** ~ [Linkedin🔗](https://www.linkedin.com/in/talha-aydin/) - [GitHub🔗](https://github.com/talhaaydn)
 
 
